@@ -1,0 +1,16 @@
+[
+{
+  "modid": "dimensionaledibles",
+  "name": "Dimensional Edibles",
+  "description": "Travel through dimensions with food!",
+  "version": "1.0",
+  "mcversion": "1.10.2",
+  "url": "https://github.com/Jacky1356400/DimensionalEdibles",
+  "updateUrl": "",
+  "authorList": ["Jacky1356400"],
+  "credits": "",
+  "logoFile": "assets/dimensionaledibles/logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

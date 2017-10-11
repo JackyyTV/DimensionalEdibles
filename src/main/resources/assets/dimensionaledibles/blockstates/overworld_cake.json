@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "dimensionaledibles:overworld_cake/overworld_cake_full"
+  },
+  "variants": {
+    "bites": {
+      0: { "model": "dimensionaledibles:overworld_cake/overworld_cake_full" },
+      1: { "model": "dimensionaledibles:overworld_cake/overworld_cake_slice1" },
+      2: { "model": "dimensionaledibles:overworld_cake/overworld_cake_slice2" },
+      3: { "model": "dimensionaledibles:overworld_cake/overworld_cake_slice3" },
+      4: { "model": "dimensionaledibles:overworld_cake/overworld_cake_slice4" },
+      5: { "model": "dimensionaledibles:overworld_cake/overworld_cake_slice5" },
+      6: { "model": "dimensionaledibles:overworld_cake/overworld_cake_slice6" }
+    },
+    "inventory": {
+      "model": "dimensionaledibles:overworld_cake"
+    }
+  }
+}

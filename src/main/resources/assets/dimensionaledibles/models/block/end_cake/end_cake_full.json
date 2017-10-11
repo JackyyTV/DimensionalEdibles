@@ -1,0 +1,9 @@
+{
+	"parent": "block/cake_uneaten",
+	"textures": {
+        "particle": "dimensionaledibles:blocks/end_cake/end_cake_2",
+        "bottom": "dimensionaledibles:blocks/end_cake/end_cake_0",
+        "top": "dimensionaledibles:blocks/end_cake/end_cake_1",
+        "side": "dimensionaledibles:blocks/end_cake/end_cake_2"
+    }
+}

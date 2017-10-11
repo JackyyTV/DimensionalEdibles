@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+version = "${mc_version}-${mod_version}"
+group = "me.jacky1356400.dimensionaledibles"
+archivesBaseName = "DimensionalEdibles"
+
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+    version = "${mc_version}-${forge_version}"
+    runDir = "run"
+    mappings = "${mappings_version}"
+}
+
+repositories {
+    maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+	maven {
+		url  "http://tehnut.info/maven"
+	}
+	maven {
+        url = "http://maven.tterrag.com"
+    }
+}
+
+dependencies {
+    compile files('libs/')
+	deobfCompile "mezz.jei:jei_1.10.2:3.14.7.+:api"
+    runtime "mezz.jei:jei_1.10.2:3.14.7.+"
+	deobfCompile "mcp.mobius.waila:Hwyla:1.8.17-B31_1.10.2:api"
+	runtime "mcp.mobius.waila:Hwyla:1.8.17-B31_1.10.2"
+	deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-1.4.+"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+artifacts {
+    archives deobfJar
+}
