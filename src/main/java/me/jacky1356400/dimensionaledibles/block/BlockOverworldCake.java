@@ -3,7 +3,6 @@ package me.jacky1356400.dimensionaledibles.block;
 import me.jacky1356400.dimensionaledibles.Config;
 import me.jacky1356400.dimensionaledibles.DimensionalEdibles;
 import me.jacky1356400.dimensionaledibles.util.TeleporterHandler;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,8 +30,6 @@ public class BlockOverworldCake extends BlockCakeBase {
         setRegistryName(DimensionalEdibles.MODID + ":overworld_cake");
         setUnlocalizedName(DimensionalEdibles.MODID + ".overworld_cake");
         setHardness(0.5F);
-        setSoundType(SoundType.CLOTH);
-        setCreativeTab(DimensionalEdibles.TAB);
     }
 
     @Override
@@ -49,8 +46,13 @@ public class BlockOverworldCake extends BlockCakeBase {
                     if (!world.isRemote) {
                         WorldServer worldServer = (WorldServer) world;
                         TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                        BlockPos spawnCoords = ((WorldServer) world).getSpawnCoordinate();
-                        tp.teleportToDimension(player, 0, spawnCoords.getX(), spawnCoords.getY(), spawnCoords.getZ());
+                        if (player.getBedLocation(0) != null) {
+                            BlockPos coords = player.getBedLocation(0);
+                            tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                        } else {
+                            BlockPos coords = ((WorldServer) world).getSpawnCoordinate();
+                            tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                        }
                     }
                 }
                 return true;
@@ -87,8 +89,14 @@ public class BlockOverworldCake extends BlockCakeBase {
                     if (!world.isRemote) {
                         WorldServer worldServer = (WorldServer) world;
                         TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                        player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200));
-                        tp.teleportToDimension(player, 0, 0, 100, 0);
+                        player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+                        if (player.getBedLocation(0) != null) {
+                            BlockPos coords = player.getBedLocation(0);
+                            tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                        } else {
+                            BlockPos coords = ((WorldServer) world).getSpawnCoordinate();
+                            tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                        }
                     }
                 }
             }

@@ -8,6 +8,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import me.jacky1356400.dimensionaledibles.util.ITOPInfoProvider;
 import me.jacky1356400.dimensionaledibles.util.IWailaInfoProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -33,7 +34,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class is the vanilla cake class,
+ * This is based on the vanilla cake class,
  * but slightly modified and added Waila / TOP support.
  */
 public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfoProvider {
@@ -43,8 +44,10 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
 
     public BlockCakeBase() {
         super(Material.CAKE);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(BITES, 0));
-        this.setTickRandomly(true);
+        setDefaultState(this.blockState.getBaseState().withProperty(BITES, 0));
+        setTickRandomly(true);
+        setHardness(0.5F);
+        setSoundType(SoundType.CLOTH);
     }
 
     @Override @SuppressWarnings("deprecation")

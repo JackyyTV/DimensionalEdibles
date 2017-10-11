@@ -36,9 +36,14 @@ public class ItemOverworldApple extends ItemFood {
             if (!world.isRemote) {
                 WorldServer worldServer = (WorldServer) world;
                 TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200));
-                BlockPos spawnCoords = ((WorldServer) world).getSpawnCoordinate();
-                tp.teleportToDimension(player, 0, spawnCoords.getX(), spawnCoords.getY(), spawnCoords.getZ());
+                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+                if (player.getBedLocation(0) != null) {
+                    BlockPos coords = player.getBedLocation(0);
+                    tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                } else {
+                    BlockPos coords = ((WorldServer) world).getSpawnCoordinate();
+                    tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                }
             }
         }
     }

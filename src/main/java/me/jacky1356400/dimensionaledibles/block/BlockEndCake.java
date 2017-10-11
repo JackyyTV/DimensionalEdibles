@@ -2,7 +2,6 @@ package me.jacky1356400.dimensionaledibles.block;
 
 import me.jacky1356400.dimensionaledibles.Config;
 import me.jacky1356400.dimensionaledibles.DimensionalEdibles;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,8 +27,6 @@ public class BlockEndCake extends BlockCakeBase {
         super();
         setRegistryName(DimensionalEdibles.MODID + ":end_cake");
         setUnlocalizedName(DimensionalEdibles.MODID + ".end_cake");
-        setHardness(0.5F);
-        setSoundType(SoundType.CLOTH);
         setCreativeTab(DimensionalEdibles.TAB);
     }
 
@@ -75,7 +72,7 @@ public class BlockEndCake extends BlockCakeBase {
                 player.getFoodStats().addStats(2, 0.1F);
                 world.setBlockState(pos, getStateFromMeta(l), 2);
                 if (world.provider.getDimension() != 1) {
-                    player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200));
+                    player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                     player.changeDimension(1);
                 }
             }

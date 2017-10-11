@@ -30,7 +30,7 @@ public class ItemEnderApple extends ItemFood {
     @Override
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
         if (world.provider.getDimension() != 1) {
-            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200));
+            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             player.changeDimension(1);
         }
     }

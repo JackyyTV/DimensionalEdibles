@@ -3,7 +3,6 @@ package me.jacky1356400.dimensionaledibles.block;
 import me.jacky1356400.dimensionaledibles.Config;
 import me.jacky1356400.dimensionaledibles.DimensionalEdibles;
 import me.jacky1356400.dimensionaledibles.util.TeleporterHandler;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,8 +30,6 @@ public class BlockNetherCake extends BlockCakeBase {
         setRegistryName(DimensionalEdibles.MODID + ":nether_cake");
         setUnlocalizedName(DimensionalEdibles.MODID + ".nether_cake");
         setHardness(0.5F);
-        setSoundType(SoundType.CLOTH);
-        setCreativeTab(DimensionalEdibles.TAB);
     }
 
     @Override
@@ -84,7 +81,7 @@ public class BlockNetherCake extends BlockCakeBase {
                     if (!world.isRemote) {
                         WorldServer worldServer = (WorldServer) world;
                         TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                        player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200));
+                        player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                         tp.teleportToDimension(player, -1, 0, world.getSeaLevel(), 0);
                     }
                 }
