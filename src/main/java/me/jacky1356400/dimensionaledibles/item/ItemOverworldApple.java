@@ -41,7 +41,7 @@ public class ItemOverworldApple extends ItemFood {
                     BlockPos coords = player.getBedLocation(0);
                     tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
                 } else {
-                    BlockPos coords = ((WorldServer) world).getSpawnCoordinate();
+                    BlockPos coords = world.getSpawnPoint();
                     tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
                 }
             }

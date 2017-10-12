@@ -69,14 +69,11 @@ public class BlockNetherCake extends BlockCakeBase {
 
     private void consumeCake(World world, BlockPos pos, EntityPlayer player) {
         if (player.canEat(true)) {
-            int l = getMetaFromState(world.getBlockState(pos)) + 1;
+            int l = world.getBlockState(pos).getValue(BITES);
 
-            if (l >= 6) {
-                return;
-            }
-            else {
+            if (l < 6) {
                 player.getFoodStats().addStats(2, 0.1F);
-                world.setBlockState(pos, getStateFromMeta(l), 2);
+                world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
                 if (world.provider.getDimension() != -1) {
                     if (!world.isRemote) {
                         WorldServer worldServer = (WorldServer) world;
