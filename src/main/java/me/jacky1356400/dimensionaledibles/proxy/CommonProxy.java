@@ -67,7 +67,7 @@ public class CommonProxy {
         if (Loader.isModLoaded("theoneprobe")) {
             TOPCompat.register();
         }
-        if (Loader.isModLoaded("Waila")) {
+        if (Loader.isModLoaded("waila")) {
             WailaCompat.register();
         }
     }

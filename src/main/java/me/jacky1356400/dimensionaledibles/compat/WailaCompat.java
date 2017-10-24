@@ -43,7 +43,7 @@ public class WailaCompat implements IWailaDataProvider {
         if (registered)
             return;
         registered = true;
-        FMLInterModComms.sendMessage("Waila", "register", "me.jacky1356400.dimensionaledibles.compat.WailaCompat.load");
+        FMLInterModComms.sendMessage("waila", "register", "me.jacky1356400.dimensionaledibles.compat.WailaCompat.load");
     }
 
     @Nullable
