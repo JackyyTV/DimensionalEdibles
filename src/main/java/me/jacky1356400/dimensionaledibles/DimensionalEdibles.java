@@ -12,10 +12,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = DimensionalEdibles.MODID, name = DimensionalEdibles.MODNAME, version = DimensionalEdibles.VERSION, useMetadata = true)
+@Mod(modid = DimensionalEdibles.MODID, name = DimensionalEdibles.MODNAME, version = DimensionalEdibles.VERSION, acceptedMinecraftVersions = DimensionalEdibles.MCVERSION, useMetadata = true)
 public class DimensionalEdibles {
 
     public static final String VERSION = "1.0";
+    public static final String MCVERSION = "[1.12,)";
     public static final String MODID = "dimensionaledibles";
     public static final String MODNAME = "Dimensional Edibles";
     public static final CreativeTabs TAB = new CreativeTabs(MODID) {

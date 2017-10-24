@@ -7,7 +7,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -15,10 +14,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nonnull;
 
 public class ItemOverworldApple extends ItemFood {
 
@@ -49,10 +44,10 @@ public class ItemOverworldApple extends ItemFood {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (Config.overworldApple)
-            list.add(new ItemStack(item));
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+        if (isInCreativeTab(tab))
+            if (Config.overworldApple)
+                list.add(new ItemStack(this));
     }
 
     @Override

@@ -18,10 +18,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nonnull;
 
 public class BlockNetherCake extends BlockCakeBase {
 
@@ -94,10 +90,9 @@ public class BlockNetherCake extends BlockCakeBase {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
         if (Config.netherCake)
-            list.add(new ItemStack(item));
+            list.add(new ItemStack(this));
     }
 
 }
