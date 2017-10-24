@@ -29,15 +29,14 @@ public class BlockOverworldCake extends BlockCakeBase {
         super();
         setRegistryName(DimensionalEdibles.MODID + ":overworld_cake");
         setUnlocalizedName(DimensionalEdibles.MODID + ".overworld_cake");
-        setHardness(0.5F);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack item, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
 
         if (player.capabilities.isCreativeMode) {
-            if (item != null && item.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.overworldCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.overworldCakeFuel))) {
                 world.setBlockState(pos, getStateFromMeta(0), 2);
                 return true;
             }
@@ -50,7 +49,7 @@ public class BlockOverworldCake extends BlockCakeBase {
                             BlockPos coords = player.getBedLocation(0);
                             tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
                         } else {
-                            BlockPos coords = ((WorldServer) world).getSpawnCoordinate();
+                            BlockPos coords = world.getSpawnPoint();
                             tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
                         }
                     }
@@ -59,16 +58,20 @@ public class BlockOverworldCake extends BlockCakeBase {
             }
         }
         else {
-            if (item != null && item.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.overworldCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.overworldCakeFuel))) {
                 if (meta >= 0) {
                     world.setBlockState(pos, getStateFromMeta(meta), 2);
-                    --item.stackSize;
+                    --stack.stackSize;
                     return true;
                 }
             }
             else {
-                consumeCake(world, pos, player);
-                return true;
+                if (world.provider.getDimension() != 0) {
+                    if (!world.isRemote) {
+                        consumeCake(world, pos, player);
+                        return true;
+                    }
+                }
             }
         }
 
@@ -82,19 +85,15 @@ public class BlockOverworldCake extends BlockCakeBase {
             if (l < 6) {
                 player.getFoodStats().addStats(2, 0.1F);
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                if (world.provider.getDimension() != 0) {
-                    if (!world.isRemote) {
-                        WorldServer worldServer = (WorldServer) world;
-                        TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                        player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                        if (player.getBedLocation(0) != null) {
-                            BlockPos coords = player.getBedLocation(0);
-                            tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
-                        } else {
-                            BlockPos coords = world.getSpawnPoint();
-                            tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
-                        }
-                    }
+                WorldServer worldServer = (WorldServer) world;
+                TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
+                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+                if (player.getBedLocation(0) != null) {
+                    BlockPos coords = player.getBedLocation(0);
+                    tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                } else {
+                    BlockPos coords = world.getSpawnPoint();
+                    tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
                 }
             }
         }

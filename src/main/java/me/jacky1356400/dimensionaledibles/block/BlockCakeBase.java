@@ -6,6 +6,7 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import me.jacky1356400.dimensionaledibles.DimensionalEdibles;
 import me.jacky1356400.dimensionaledibles.util.ITOPInfoProvider;
 import me.jacky1356400.dimensionaledibles.util.IWailaInfoProvider;
 import net.minecraft.block.Block;
@@ -49,6 +50,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         setTickRandomly(true);
         setHardness(0.5F);
         setSoundType(SoundType.CLOTH);
+        setCreativeTab(DimensionalEdibles.TAB);
     }
 
     @Override @SuppressWarnings("deprecation")

@@ -27,34 +27,41 @@ public class BlockEndCake extends BlockCakeBase {
         super();
         setRegistryName(DimensionalEdibles.MODID + ":end_cake");
         setUnlocalizedName(DimensionalEdibles.MODID + ".end_cake");
-        setCreativeTab(DimensionalEdibles.TAB);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack item, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
 
         if (player.capabilities.isCreativeMode) {
-            if (item != null && item.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
                 world.setBlockState(pos, getStateFromMeta(0), 2);
                 return true;
             }
             else {
-                player.changeDimension(1);
-                return true;
+                if (world.provider.getDimension() != 1) {
+                    if (!world.isRemote) {
+                        player.changeDimension(1);
+                        return true;
+                    }
+                }
             }
         }
         else {
-            if (item != null && item.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
                 if (meta >= 0) {
                     world.setBlockState(pos, getStateFromMeta(meta), 2);
-                    --item.stackSize;
+                    --stack.stackSize;
                     return true;
                 }
             }
             else {
-                consumeCake(world, pos, player);
-                return true;
+                if (world.provider.getDimension() != 1) {
+                    if (!world.isRemote) {
+                        consumeCake(world, pos, player);
+                        return true;
+                    }
+                }
             }
         }
 
@@ -68,10 +75,8 @@ public class BlockEndCake extends BlockCakeBase {
             if (l < 6) {
                 player.getFoodStats().addStats(2, 0.1F);
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                if (world.provider.getDimension() != 1) {
-                    player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                    player.changeDimension(1);
-                }
+                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+                player.changeDimension(1);
             }
         }
     }

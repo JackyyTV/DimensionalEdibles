@@ -16,14 +16,14 @@ public class DimensionalEdibles {
 
     public static final String VERSION = "1.0";
     public static final String MODID = "dimensionaledibles";
-    public static final String MODNAME = "DimensionalEdibles";
+    public static final String MODNAME = "Dimensional Edibles";
     public static final CreativeTabs TAB = new CreativeTabs(MODID) {
         @Override
         public Item getTabIconItem() {
             return Item.getItemFromBlock(CommonProxy.endCake);
         }
     };
-    public static Logger logger = LogManager.getLogger("DimensionalEdibles");
+    public static Logger logger = LogManager.getLogger(MODNAME);
 
     @SidedProxy(serverSide = "me.jacky1356400.dimensionaledibles.proxy.CommonProxy", clientSide = "me.jacky1356400.dimensionaledibles.proxy.ClientProxy")
     public static CommonProxy proxy;
