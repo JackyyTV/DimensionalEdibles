@@ -29,7 +29,7 @@ public class TeleporterHandler extends Teleporter {
         int oldDimension = player.getEntityWorld().provider.getDimension();
         EntityPlayerMP entityPlayerMP = (EntityPlayerMP) player;
         MinecraftServer server = player.getEntityWorld().getMinecraftServer();
-        WorldServer worldServer = server.worldServerForDimension(dimension);
+        WorldServer worldServer = server.getWorld(dimension);
 
         if (worldServer == null || worldServer.getMinecraftServer() == null) {
             throw new IllegalArgumentException("Dimension: " + dimension + " doesn't exist!");
@@ -39,7 +39,7 @@ public class TeleporterHandler extends Teleporter {
         player.setPositionAndUpdate(x, y, z);
         if (oldDimension == 1) {
             player.setPositionAndUpdate(x, y, z);
-            worldServer.spawnEntityInWorld(player);
+            worldServer.spawnEntity(player);
             worldServer.updateEntityWithOptionalForce(player, false);
         }
     }

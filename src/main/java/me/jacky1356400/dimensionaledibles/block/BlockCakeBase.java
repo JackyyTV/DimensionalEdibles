@@ -31,7 +31,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -74,7 +73,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (playerIn.canEat(false)) {
             playerIn.addStat(StatList.CAKE_SLICES_EATEN);
             playerIn.getFoodStats().addStats(2, 0.1F);
@@ -96,7 +95,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
     }
 
     @Override @SuppressWarnings("deprecation")
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!this.canBlockStay(worldIn, pos)) {
             worldIn.setBlockToAir(pos);
         }
@@ -111,7 +110,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return 0;
     }
 
-    @Override @Nullable
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return null;
     }

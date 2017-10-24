@@ -3,6 +3,7 @@ package me.jacky1356400.dimensionaledibles;
 import me.jacky1356400.dimensionaledibles.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -19,8 +20,8 @@ public class DimensionalEdibles {
     public static final String MODNAME = "Dimensional Edibles";
     public static final CreativeTabs TAB = new CreativeTabs(MODID) {
         @Override
-        public Item getTabIconItem() {
-            return Item.getItemFromBlock(CommonProxy.endCake);
+        public ItemStack getTabIconItem() {
+            return new ItemStack(Item.getItemFromBlock(CommonProxy.endCake));
         }
     };
     public static Logger logger = LogManager.getLogger(MODNAME);

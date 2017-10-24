@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,7 +20,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class BlockEndCake extends BlockCakeBase {
 
@@ -30,11 +30,12 @@ public class BlockEndCake extends BlockCakeBase {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack stack, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
+        ItemStack stack = player.getHeldItem(hand);
 
         if (player.capabilities.isCreativeMode) {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
+            if (stack != ItemStack.EMPTY && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
                 world.setBlockState(pos, getStateFromMeta(0), 2);
                 return true;
             }
@@ -48,10 +49,10 @@ public class BlockEndCake extends BlockCakeBase {
             }
         }
         else {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
+            if (stack != ItemStack.EMPTY && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(Config.endCakeFuel))) {
                 if (meta >= 0) {
                     world.setBlockState(pos, getStateFromMeta(meta), 2);
-                    --stack.stackSize;
+                    stack.shrink(1);
                     return true;
                 }
             }
@@ -82,13 +83,13 @@ public class BlockEndCake extends BlockCakeBase {
     }
 
     @Override @SuppressWarnings("deprecation")
-    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         return getStateFromMeta(6);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
+    public void getSubBlocks(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
         if (Config.endCake)
             list.add(new ItemStack(item));
     }
