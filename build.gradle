@@ -8,10 +8,9 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 version = "${mc_version}-${mod_version}"
-group = "me.jacky1356400.dimensionaledibles"
+group = "jackyy.dimensionaledibles"
 archivesBaseName = "DimensionalEdibles"
 
 sourceCompatibility = targetCompatibility = "1.8"
@@ -20,30 +19,33 @@ compileJava {
 }
 
 minecraft {
-    version = "${mc_version}-${forge_version}"
+    version = "${forge_version}"
     runDir = "run"
     mappings = "${mappings_version}"
+
+    replace '@FINGERPRINT@', project.findProperty('signSHA1')
+    replaceIn "DimensionalEdibles.java"
 }
 
 repositories {
     maven {
+        name = "JEI Maven"
         url "http://dvs1.progwml6.com/files/maven"
     }
-	maven {
-		url  "http://tehnut.info/maven"
-	}
-	maven {
+    maven {
+        name = "Hwyla Maven"
+        url  "http://tehnut.info/maven"
+    }
+    maven {
+        name = "TOP Maven"
         url = "http://maven.tterrag.com"
     }
 }
 
 dependencies {
-    compile files('libs/')
-	deobfCompile "mezz.jei:jei_1.10.2:3.14.7.+:api"
-	runtime "mezz.jei:jei_1.10.2:3.14.7.+"
-	deobfCompile "mcp.mobius.waila:Hwyla:1.8.17-B31_1.10.2:api"
-	runtime "mcp.mobius.waila:Hwyla:1.8.17-B31_1.10.2"
-	deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-1.4.+"
+    deobfCompile "mezz.jei:jei_1.10.2:+"
+    deobfCompile "mcp.mobius.waila:Hwyla:1.8.17-B31_1.10.2"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe:1.1x-1.4.+"
 }
 
 processResources {
@@ -57,6 +59,20 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+task signJar(type: SignJar, dependsOn: reobfJar) {
+    onlyIf {
+        project.hasProperty('keyStore')
+    }
+    keyStore = project.findProperty('keyStore')
+    alias = project.findProperty('keyStoreAlias')
+    storePass = project.findProperty('keyStorePass')
+    keyPass = project.findProperty('keyStoreKeyPass')
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
+}
+
+build.dependsOn signJar
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
