@@ -9,22 +9,22 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 public class ModRecipes {
 
     public static void init() {
-        if (ModConfig.endCake)
+        if (ModConfig.general.endCake)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.getItemFromBlock(ModBlocks.endCake)),
                     "EEE", "ECE", "EEE", 'E', Items.ENDER_EYE, 'C', Items.CAKE));
-        if (ModConfig.netherCake)
+        if (ModConfig.general.netherCake)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.getItemFromBlock(ModBlocks.netherCake)),
                     "OOO", "OCO", "OOO", 'O', "obsidian", 'C', Items.CAKE));
-        if (ModConfig.overworldCake)
+        if (ModConfig.general.overworldCake)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.getItemFromBlock(ModBlocks.overworldCake)),
                     "SSS", "SCS", "SSS", 'S', "treeSapling", 'C', Items.CAKE));
-        if (ModConfig.enderApple)
+        if (ModConfig.general.enderApple)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.enderApple),
                     "EEE", "EAE", "EEE", 'E', Items.ENDER_EYE, 'A', Items.GOLDEN_APPLE));
-        if (ModConfig.netherApple)
+        if (ModConfig.general.netherApple)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.netherApple),
                     "OOO", "OAO", "OOO", 'O', "obsidian", 'A', Items.GOLDEN_APPLE));
-        if (ModConfig.overworldApple)
+        if (ModConfig.general.overworldApple)
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.overworldApple),
                     "SSS", "SAS", "SSS", 'S', "treeSapling", 'A', Items.GOLDEN_APPLE));
     }

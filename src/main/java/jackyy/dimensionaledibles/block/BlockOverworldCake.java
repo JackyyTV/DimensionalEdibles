@@ -36,7 +36,7 @@ public class BlockOverworldCake extends BlockCakeBase {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
 
         if (player.capabilities.isCreativeMode) {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.overworldCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCakeFuel))) {
                 world.setBlockState(pos, getStateFromMeta(0), 2);
                 return true;
             }
@@ -58,7 +58,7 @@ public class BlockOverworldCake extends BlockCakeBase {
             }
         }
         else {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.overworldCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCakeFuel))) {
                 if (meta >= 0) {
                     world.setBlockState(pos, getStateFromMeta(meta), 2);
                     --stack.stackSize;
@@ -107,7 +107,7 @@ public class BlockOverworldCake extends BlockCakeBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-        if (ModConfig.overworldCake)
+        if (ModConfig.general.overworldCake)
             list.add(new ItemStack(item));
     }
 

@@ -1,50 +1,84 @@
 package jackyy.dimensionaledibles.registry;
 
 import jackyy.dimensionaledibles.DimensionalEdibles;
-import jackyy.dimensionaledibles.proxy.CommonProxy;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+import java.io.File;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.Optional;
+
+@Config(modid = DimensionalEdibles.MODID, name = "DimensionalEdibles")
 public class ModConfig {
 
-    private static final String CATEGORY_GENERAL = "general";
-    private static final String CATEGORY_TWEAKS = "tweaks";
+    public static General general = new General();
+    public static Tweaks tweaks = new Tweaks();
 
-    public static boolean endCake;
-    public static boolean netherCake;
-    public static boolean overworldCake;
-    public static boolean enderApple;
-    public static boolean netherApple;
-    public static boolean overworldApple;
-
-    public static String endCakeFuel;
-    public static String netherCakeFuel;
-    public static String overworldCakeFuel;
-
-    public static void readConfig() {
-        Configuration cfg = CommonProxy.config;
-        try {
-            cfg.load();
-            initConfig(cfg);
-        } catch (Exception e) {
-            DimensionalEdibles.logger.error("Error caught while loading config!", e);
-        } finally {
-            if(cfg.hasChanged()){
-                cfg.save();
-            }
-        }
+    public static class General {
+        @Config.Comment("Set to true to enable End Cake.")
+        public boolean endCake = true;
+        @Config.Comment("Set to true to enable Nether Cake.")
+        public boolean netherCake = true;
+        @Config.Comment("Set to true to enable Overworld Cake.")
+        public boolean overworldCake = true;
+        @Config.Comment("Set to true to enable Ender Cake.")
+        public boolean enderApple = true;
+        @Config.Comment("Set to true to enable Nether Cake.")
+        public boolean netherApple = true;
+        @Config.Comment("Set to true to enable Overworld Cake.")
+        public boolean overworldApple = true;
     }
 
-    private static void initConfig(Configuration cfg) {
-        endCake = cfg.getBoolean("endCake", CATEGORY_GENERAL, true, "Set to true to enable End Cake.");
-        netherCake = cfg.getBoolean("netherCake", CATEGORY_GENERAL, true, "Set to true to enable Nether Cake.");
-        overworldCake = cfg.getBoolean("overworldCake", CATEGORY_GENERAL, true, "Set to true to enable Overworld Cake.");
-        enderApple = cfg.getBoolean("enderApple", CATEGORY_GENERAL, true, "Set to true to enable Ender Apple.");
-        netherApple = cfg.getBoolean("netherApple", CATEGORY_GENERAL, true, "Set to true to enable Nether Apple.");
-        overworldApple = cfg.getBoolean("overworldApple", CATEGORY_GENERAL, true, "Set to true to enable Overworld Apple.");
+    public static class Tweaks {
+        @Config.Comment("Set the fuel used by End Cake (Don't change this unless you know what you're doing).")
+        public String endCakeFuel = "minecraft:ender_eye";
+        @Config.Comment("Set the fuel used by Nether Cake (Don't change this unless you know what you're doing).")
+        public String netherCakeFuel = "minecraft:obsidian";
+        @Config.Comment("Set the fuel used by Overworld Cake (Don't change this unless you know what you're doing).")
+        public String overworldCakeFuel = "minecraft:sapling";
+    }
 
-        endCakeFuel = cfg.getString("endCakeFuel", CATEGORY_TWEAKS, "minecraft:ender_eye", "Set the fuel used by End Cake (Don't change this unless you know what you're doing).");
-        netherCakeFuel = cfg.getString("netherCakeFuel", CATEGORY_TWEAKS, "minecraft:obsidian", "Set the fuel used by Nether Cake (Don't change this unless you know what you're doing).");
-        overworldCakeFuel = cfg.getString("overworldCakeFuel", CATEGORY_TWEAKS, "minecraft:sapling", "Set the fuel used by Overworld Cake (Don't change this unless you know what you're doing).");
+    @Mod.EventBusSubscriber
+    public static class ConfigHolder {
+        private static final MethodHandle CONFIGS_GETTER = findFieldGetter(ConfigManager.class, "CONFIGS");
+        private static Configuration config;
+        private static MethodHandle findFieldGetter(Class<?> clazz, String... fieldNames) {
+            final Field field = ReflectionHelper.findField(clazz, fieldNames);
+            try {
+                return MethodHandles.lookup().unreflectGetter(field);
+            } catch (IllegalAccessException e) {
+                throw new ReflectionHelper.UnableToAccessFieldException(fieldNames, e);
+            }
+        }
+        @SuppressWarnings("unchecked")
+        public static Configuration getConfig() {
+            if (config == null) {
+                try {
+                    final String fileName = "Exchangers.cfg";
+                    final Map<String, Configuration> configsMap = (Map<String, Configuration>) CONFIGS_GETTER.invokeExact();
+                    final Optional<Map.Entry<String, Configuration>> entryOptional = configsMap.entrySet().stream()
+                            .filter(entry -> fileName.equals(new File(entry.getKey()).getName())).findFirst();
+                    entryOptional.ifPresent(stringConfigurationEntry -> config = stringConfigurationEntry.getValue());
+                } catch (Throwable throwable) {
+                    DimensionalEdibles.logger.error("Failed to get Configuration instance!", throwable);
+                }
+            }
+            return config;
+        }
+        @SubscribeEvent
+        public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+            if (event.getModID().equals(DimensionalEdibles.MODID)) {
+                ConfigManager.load(DimensionalEdibles.MODID, Config.Type.INSTANCE);
+            }
+        }
     }
 
 }

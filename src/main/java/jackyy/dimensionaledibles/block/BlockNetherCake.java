@@ -36,7 +36,7 @@ public class BlockNetherCake extends BlockCakeBase {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
 
         if (player.capabilities.isCreativeMode) {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.netherCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel))) {
                 world.setBlockState(pos, getStateFromMeta(0), 2);
                 return true;
             }
@@ -52,7 +52,7 @@ public class BlockNetherCake extends BlockCakeBase {
             }
         }
         else {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.netherCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel))) {
                 if (meta >= 0) {
                     world.setBlockState(pos, getStateFromMeta(meta), 2);
                     --stack.stackSize;
@@ -95,7 +95,7 @@ public class BlockNetherCake extends BlockCakeBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-        if (ModConfig.netherCake)
+        if (ModConfig.general.netherCake)
             list.add(new ItemStack(item));
     }
 

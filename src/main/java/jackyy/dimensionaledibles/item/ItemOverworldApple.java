@@ -51,7 +51,7 @@ public class ItemOverworldApple extends ItemFood {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
-        if (ModConfig.overworldApple)
+        if (ModConfig.general.overworldApple)
             list.add(new ItemStack(item));
     }
 
