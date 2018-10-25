@@ -45,7 +45,7 @@ public class BlockNetherCake extends BlockCakeBase {
                     if (!world.isRemote) {
                         WorldServer worldServer = (WorldServer) world;
                         TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                        tp.teleportToDimension(player, -1, 0, world.getSeaLevel(), 0);
+                        tp.teleportToDimension(player, -1, 0, player.getPosition().getY() + 1, 0);
                     }
                 }
                 return true;
@@ -82,7 +82,7 @@ public class BlockNetherCake extends BlockCakeBase {
                 WorldServer worldServer = (WorldServer) world;
                 TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                tp.teleportToDimension(player, -1, 0, world.getSeaLevel(), 0);
+                tp.teleportToDimension(player, -1, 0, player.getPosition().getY() + 1, 0);
             }
         }
     }
