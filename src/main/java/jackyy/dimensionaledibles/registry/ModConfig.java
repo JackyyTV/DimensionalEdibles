@@ -62,7 +62,7 @@ public class ModConfig {
         public static Configuration getConfig() {
             if (config == null) {
                 try {
-                    final String fileName = "Exchangers.cfg";
+                    final String fileName = "DimensionalEdibles.cfg";
                     final Map<String, Configuration> configsMap = (Map<String, Configuration>) CONFIGS_GETTER.invokeExact();
                     final Optional<Map.Entry<String, Configuration>> entryOptional = configsMap.entrySet().stream()
                             .filter(entry -> fileName.equals(new File(entry.getKey()).getName())).findFirst();

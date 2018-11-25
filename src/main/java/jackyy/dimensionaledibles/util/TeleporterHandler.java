@@ -40,8 +40,8 @@ public class TeleporterHandler extends Teleporter {
                 entityPlayerMP, dimension, new TeleporterHandler(worldServer, x, y, z));
 
         BlockPos pos = new BlockPos(x, y - 1, z);
-        for (int xx = -2; xx <= 2; xx++) {
-            for (int zz = -2; zz <= 2; zz++) {
+        for (int xx = -1; xx <= 1; xx++) {
+            for (int zz = -1; zz <= 1; zz++) {
                 if (!worldServer.getBlockState(pos.add(xx, 0, zz)).isFullBlock()
                         && !worldServer.getBlockState(pos.add(xx, -1, zz)).isFullBlock()
                         && !worldServer.getBlockState(pos.add(xx, -2, zz)).isFullBlock()) {
@@ -50,7 +50,7 @@ public class TeleporterHandler extends Teleporter {
             }
         }
 
-        for (int yy = 0; yy <= 2; yy++) {
+        for (int yy = 1; yy <= 3; yy++) {
             if (worldServer.getBlockState(pos.add(0, yy, 0)).isFullBlock()) {
                 worldServer.setBlockToAir(pos.add(0, yy, 0));
             }
