@@ -35,8 +35,9 @@ public class ItemEnderApple extends ItemFood {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (ModConfig.general.enderApple)
-            list.add(new ItemStack(this));
+        if (isInCreativeTab(tab))
+            if (ModConfig.general.enderApple)
+                list.add(new ItemStack(this));
     }
 
     @Override

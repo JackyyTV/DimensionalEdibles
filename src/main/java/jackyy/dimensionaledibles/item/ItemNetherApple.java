@@ -41,8 +41,9 @@ public class ItemNetherApple extends ItemFood {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (ModConfig.general.netherApple)
-            list.add(new ItemStack(this));
+        if (isInCreativeTab(tab))
+            if (ModConfig.general.netherApple)
+                list.add(new ItemStack(this));
     }
 
     @Override
