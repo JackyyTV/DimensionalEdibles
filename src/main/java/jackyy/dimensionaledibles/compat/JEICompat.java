@@ -27,18 +27,18 @@ public class JEICompat implements IModPlugin {
         //End Cake
         registry.addDescription(new ItemStack(ModBlocks.endCake),
                 I18n.format(DimensionalEdibles.MODID + ".end_cake.jeidesc",
-                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCakeFuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCakeFuel))))));
+                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel)).getItemStackDisplayName(
+                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel))))));
         //Nether Cake
         registry.addDescription(new ItemStack(ModBlocks.netherCake),
                 I18n.format(DimensionalEdibles.MODID + ".nether_cake.jeidesc",
-                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel))))));
+                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel)).getItemStackDisplayName(
+                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))))));
         //Overworld Cake
         registry.addDescription(new ItemStack(ModBlocks.overworldCake),
                 I18n.format(DimensionalEdibles.MODID + ".overworld_cake.jeidesc",
-                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCakeFuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCakeFuel))))));
+                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel)).getItemStackDisplayName(
+                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel))))));
         //Ender Apple
         registry.addDescription(new ItemStack(ModItems.enderApple),
                 DimensionalEdibles.MODID + ".ender_apple.jeidesc");

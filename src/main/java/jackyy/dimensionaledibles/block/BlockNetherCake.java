@@ -36,7 +36,7 @@ public class BlockNetherCake extends BlockCakeBase {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
 
         if (player.capabilities.isCreativeMode) {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))) {
                 world.setBlockState(pos, getStateFromMeta(0), 2);
                 return true;
             }
@@ -45,14 +45,20 @@ public class BlockNetherCake extends BlockCakeBase {
                     if (!world.isRemote) {
                         WorldServer worldServer = (WorldServer) world;
                         TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                        tp.teleportToDimension(player, -1, 0, player.getPosition().getY() + 1, 0);
+                        BlockPos coords;
+                        if (ModConfig.tweaks.netherCake.useCustomCoords) {
+                            coords = new BlockPos(ModConfig.tweaks.netherCake.customCoords.x, ModConfig.tweaks.netherCake.customCoords.y, ModConfig.tweaks.netherCake.customCoords.z);
+                        } else {
+                            coords = new BlockPos(0, player.getPosition().getY() + 1, 0);
+                        }
+                        tp.teleportToDimension(player, -1, coords.getX(), coords.getY(), coords.getZ());
                     }
                 }
                 return true;
             }
         }
         else {
-            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel))) {
+            if (stack != null && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))) {
                 if (meta >= 0) {
                     world.setBlockState(pos, getStateFromMeta(meta), 2);
                     --stack.stackSize;
@@ -82,14 +88,20 @@ public class BlockNetherCake extends BlockCakeBase {
                 WorldServer worldServer = (WorldServer) world;
                 TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                tp.teleportToDimension(player, -1, 0, player.getPosition().getY() + 1, 0);
+                BlockPos coords;
+                if (ModConfig.tweaks.netherCake.useCustomCoords) {
+                    coords = new BlockPos(ModConfig.tweaks.netherCake.customCoords.x, ModConfig.tweaks.netherCake.customCoords.y, ModConfig.tweaks.netherCake.customCoords.z);
+                } else {
+                    coords = new BlockPos(0, player.getPosition().getY() + 1, 0);
+                }
+                tp.teleportToDimension(player, -1, coords.getX(), coords.getY(), coords.getZ());
             }
         }
     }
 
     @Override @SuppressWarnings("deprecation")
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return getStateFromMeta(6);
+        return ModConfig.tweaks.netherCake.preFueled ? getStateFromMeta(0) : getStateFromMeta(6);
     }
 
     @Override

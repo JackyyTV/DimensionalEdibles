@@ -38,6 +38,7 @@ public class TeleporterHandler extends Teleporter {
 
         worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension(
                 entityPlayerMP, dimension, new TeleporterHandler(worldServer, x, y, z));
+        player.changeDimension(dimension);
 
         BlockPos pos = new BlockPos(x, y - 1, z);
         for (int xx = -1; xx <= 1; xx++) {
