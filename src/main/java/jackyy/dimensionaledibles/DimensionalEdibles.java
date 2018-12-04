@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = DimensionalEdibles.MODID, name = DimensionalEdibles.MODNAME, version = DimensionalEdibles.VERSION, acceptedMinecraftVersions = DimensionalEdibles.MCVERSION, dependencies = DimensionalEdibles.DEPENDS, certificateFingerprint = "@FINGERPRINT@", useMetadata = true)
+@Mod(modid = DimensionalEdibles.MODID, name = DimensionalEdibles.MODNAME, version = DimensionalEdibles.VERSION, acceptedMinecraftVersions = DimensionalEdibles.MCVERSION, dependencies = DimensionalEdibles.DEPENDS, guiFactory = DimensionalEdibles.GUIFACTORY, certificateFingerprint = "@FINGERPRINT@", useMetadata = true)
 public class DimensionalEdibles {
 
     public static final String VERSION = "1.2";
@@ -21,6 +21,7 @@ public class DimensionalEdibles {
     public static final String MODID = "dimensionaledibles";
     public static final String MODNAME = "Dimensional Edibles";
     public static final String DEPENDS = "after:Waila;after:theoneprobe;";
+    public static final String GUIFACTORY = "jackyy.dimensionaledibles.registry.ConfigGuiFactory";
     public static final CreativeTabs TAB = new CreativeTabs(MODID) {
         @Override
         public Item getTabIconItem() {

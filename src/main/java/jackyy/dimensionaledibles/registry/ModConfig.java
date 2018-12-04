@@ -51,9 +51,9 @@ public class ModConfig {
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
-                public double x = 0;
-                public double y = 64;
-                public double z = 0;
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
             }
         }
         public NetherCake netherCake = new NetherCake();
@@ -69,9 +69,9 @@ public class ModConfig {
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
-                public double x = 0;
-                public double y = 64;
-                public double z = 0;
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
             }
         }
         public OverworldCake overworldCake = new OverworldCake();
@@ -87,9 +87,9 @@ public class ModConfig {
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
-                public double x = 0;
-                public double y = 64;
-                public double z = 0;
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
             }
         }
     }
