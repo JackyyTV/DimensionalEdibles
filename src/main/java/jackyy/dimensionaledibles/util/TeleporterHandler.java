@@ -8,6 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeHooks;
 
 import javax.annotation.Nonnull;
 
@@ -27,7 +28,6 @@ public class TeleporterHandler extends Teleporter {
     }
 
     public void teleportToDimension(EntityPlayer player, int dimension, double x, double y, double z) {
-        int oldDimension = player.getEntityWorld().provider.getDimension();
         EntityPlayerMP entityPlayerMP = (EntityPlayerMP) player;
         MinecraftServer server = player.getEntityWorld().getMinecraftServer();
         WorldServer worldServer = server.worldServerForDimension(dimension);
@@ -36,17 +36,19 @@ public class TeleporterHandler extends Teleporter {
             throw new IllegalArgumentException("Dimension: " + dimension + " doesn't exist!");
         }
 
+        if (!ForgeHooks.onTravelToDimension(player, dimension))
+            return;
+
         worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension(
                 entityPlayerMP, dimension, new TeleporterHandler(worldServer, x, y, z));
-        player.changeDimension(dimension);
 
         BlockPos pos = new BlockPos(x, y - 1, z);
-        for (int xx = -1; xx <= 1; xx++) {
-            for (int zz = -1; zz <= 1; zz++) {
-                if (!worldServer.getBlockState(pos.add(xx, 0, zz)).isFullBlock()
-                        && !worldServer.getBlockState(pos.add(xx, -1, zz)).isFullBlock()
-                        && !worldServer.getBlockState(pos.add(xx, -2, zz)).isFullBlock()) {
-                    worldServer.setBlockState(pos.add(xx, 0, zz), Blocks.OBSIDIAN.getDefaultState());
+        if (worldServer.provider.getDimension() == -1) {
+            for (int xx = -1; xx <= 1; xx++) {
+                for (int zz = -1; zz <= 1; zz++) {
+                    if (!worldServer.getBlockState(pos.add(xx, 0, zz)).isFullBlock()) {
+                        worldServer.setBlockState(pos.add(xx, 0, zz), Blocks.OBSIDIAN.getDefaultState());
+                    }
                 }
             }
         }
@@ -57,13 +59,9 @@ public class TeleporterHandler extends Teleporter {
             }
         }
 
-        player.setPositionAndUpdate(x + .5, y + .5, z + .5);
-
-        if (oldDimension == 1) {
-            player.setPositionAndUpdate(x, y, z);
-            worldServer.spawnEntityInWorld(player);
-            worldServer.updateEntityWithOptionalForce(player, false);
-        }
+        player.setPositionAndUpdate(x + 0.5D, y + 0.5D, z + 0.5D);
+        worldServer.spawnEntityInWorld(player);
+        worldServer.updateEntityWithOptionalForce(player, false);
     }
 
     @Override

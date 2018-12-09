@@ -49,7 +49,10 @@ public class BlockOverworldCake extends BlockCakeBase {
                         if (ModConfig.tweaks.overworldCake.useCustomCoords) {
                             coords = new BlockPos(ModConfig.tweaks.overworldCake.customCoords.x, ModConfig.tweaks.overworldCake.customCoords.y, ModConfig.tweaks.overworldCake.customCoords.z);
                         } else {
-                            coords = worldServer.getTopSolidOrLiquidBlock(world.getSpawnPoint());
+                            coords = world.getSpawnPoint();
+                            while (world.getBlockState(world.getSpawnPoint()).isFullCube()) {
+                                coords = coords.up(2);
+                            }
                         }
                         tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
                     }
@@ -88,7 +91,15 @@ public class BlockOverworldCake extends BlockCakeBase {
                 WorldServer worldServer = (WorldServer) world;
                 TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                BlockPos coords = worldServer.getTopSolidOrLiquidBlock(world.getSpawnPoint());
+                BlockPos coords;
+                if (ModConfig.tweaks.overworldCake.useCustomCoords) {
+                    coords = new BlockPos(ModConfig.tweaks.overworldCake.customCoords.x, ModConfig.tweaks.overworldCake.customCoords.y, ModConfig.tweaks.overworldCake.customCoords.z);
+                } else {
+                    coords = world.getSpawnPoint();
+                    while (world.getBlockState(world.getSpawnPoint()).isFullCube()) {
+                        coords = coords.up(2);
+                    }
+                }
                 tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
             }
         }

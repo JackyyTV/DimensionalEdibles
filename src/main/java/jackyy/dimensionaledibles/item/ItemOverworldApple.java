@@ -38,10 +38,13 @@ public class ItemOverworldApple extends ItemFood {
                 TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                 BlockPos coords;
-                if (player.getBedLocation(0) != null) {
-                    coords = player.getBedLocation(0);
+                if (ModConfig.tweaks.overworldApple.useCustomCoords) {
+                    coords = new BlockPos(ModConfig.tweaks.overworldApple.customCoords.x, ModConfig.tweaks.overworldApple.customCoords.y, ModConfig.tweaks.overworldApple.customCoords.z);
                 } else {
                     coords = world.getSpawnPoint();
+                    while (world.getBlockState(world.getSpawnPoint()).isFullCube()) {
+                        coords = coords.up(2);
+                    }
                 }
                 tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
             }

@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,7 +37,13 @@ public class ItemNetherApple extends ItemFood {
                 WorldServer worldServer = (WorldServer) world;
                 TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                tp.teleportToDimension(player, -1, 0, player.getPosition().getY() + 1, 0);
+                BlockPos coords;
+                if (ModConfig.tweaks.netherApple.useCustomCoords) {
+                    coords = new BlockPos(ModConfig.tweaks.netherApple.customCoords.x, ModConfig.tweaks.netherApple.customCoords.y, ModConfig.tweaks.netherApple.customCoords.z);
+                } else {
+                    coords = new BlockPos(0, player.getPosition().getY() + 1, 0);
+                }
+                tp.teleportToDimension(player, -1, coords.getX(), coords.getY(), coords.getZ());
             }
         }
     }
