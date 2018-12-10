@@ -20,7 +20,7 @@ public class DimensionalEdibles {
     public static final String MCVERSION = "[1.12,1.13)";
     public static final String MODID = "dimensionaledibles";
     public static final String MODNAME = "Dimensional Edibles";
-    public static final String DEPENDS = "after:waila;after:theoneprobe;after:jei@[4.12.0.0,)";
+    public static final String DEPENDS = "after:waila;after:theoneprobe;after:jei@[4.12.0.0,);";
     public static final CreativeTabs TAB = new CreativeTabs(MODID) {
         @Override
         public ItemStack createIcon() {
