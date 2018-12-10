@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,10 +44,9 @@ public class BlockEndCake extends BlockCakeBase {
                 if (world.provider.getDimension() != 1) {
                     if (!world.isRemote) {
                         if (ModConfig.tweaks.endCake.useCustomCoords) {
-                            WorldServer worldServer = (WorldServer) world;
-                            TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
+                            EntityPlayerMP playerMP = (EntityPlayerMP) player;
                             BlockPos coords = new BlockPos(ModConfig.tweaks.endCake.customCoords.x, ModConfig.tweaks.endCake.customCoords.y, ModConfig.tweaks.endCake.customCoords.z);
-                            tp.teleportToDimension(player, -1, coords.getX(), coords.getY(), coords.getZ());
+                            TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
                         } else {
                             player.changeDimension(1);
                         }
@@ -86,10 +85,9 @@ public class BlockEndCake extends BlockCakeBase {
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                 if (ModConfig.tweaks.endCake.useCustomCoords) {
-                    WorldServer worldServer = (WorldServer) world;
-                    TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
+                    EntityPlayerMP playerMP = (EntityPlayerMP) player;
                     BlockPos coords = new BlockPos(ModConfig.tweaks.endCake.customCoords.x, ModConfig.tweaks.endCake.customCoords.y, ModConfig.tweaks.endCake.customCoords.z);
-                    tp.teleportToDimension(player, -1, coords.getX(), coords.getY(), coords.getZ());
+                    TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
                 } else {
                     player.changeDimension(1);
                 }

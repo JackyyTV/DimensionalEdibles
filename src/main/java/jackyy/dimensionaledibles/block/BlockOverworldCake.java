@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,8 +43,7 @@ public class BlockOverworldCake extends BlockCakeBase {
             else {
                 if (world.provider.getDimension() != 0) {
                     if (!world.isRemote) {
-                        WorldServer worldServer = (WorldServer) world;
-                        TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
+                        EntityPlayerMP playerMP = (EntityPlayerMP) player;
                         BlockPos coords;
                         if (ModConfig.tweaks.overworldCake.useCustomCoords) {
                             coords = new BlockPos(ModConfig.tweaks.overworldCake.customCoords.x, ModConfig.tweaks.overworldCake.customCoords.y, ModConfig.tweaks.overworldCake.customCoords.z);
@@ -54,7 +53,7 @@ public class BlockOverworldCake extends BlockCakeBase {
                                 coords = coords.up(2);
                             }
                         }
-                        tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                        TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
                     }
                 }
                 return true;
@@ -88,8 +87,7 @@ public class BlockOverworldCake extends BlockCakeBase {
             if (l < 6) {
                 player.getFoodStats().addStats(2, 0.1F);
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                WorldServer worldServer = (WorldServer) world;
-                TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
+                EntityPlayerMP playerMP = (EntityPlayerMP) player;
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                 BlockPos coords;
                 if (ModConfig.tweaks.overworldCake.useCustomCoords) {
@@ -100,7 +98,7 @@ public class BlockOverworldCake extends BlockCakeBase {
                         coords = coords.up(2);
                     }
                 }
-                tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
             }
         }
     }

@@ -5,6 +5,7 @@ import jackyy.dimensionaledibles.registry.ModConfig;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -13,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,8 +34,7 @@ public class ItemNetherApple extends ItemFood {
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
         if (world.provider.getDimension() != -1) {
             if (!world.isRemote) {
-                WorldServer worldServer = (WorldServer) world;
-                TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
+                EntityPlayerMP playerMP = (EntityPlayerMP) player;
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                 BlockPos coords;
                 if (ModConfig.tweaks.netherApple.useCustomCoords) {
@@ -43,7 +42,7 @@ public class ItemNetherApple extends ItemFood {
                 } else {
                     coords = new BlockPos(0, player.getPosition().getY() + 1, 0);
                 }
-                tp.teleportToDimension(player, -1, coords.getX(), coords.getY(), coords.getZ());
+                TeleporterHandler.teleport(playerMP, -1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
             }
         }
     }
