@@ -8,10 +8,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -48,7 +46,7 @@ public class BlockNetherCake extends BlockCakeBase {
                         if (ModConfig.tweaks.netherCake.useCustomCoords) {
                             coords = new BlockPos(ModConfig.tweaks.netherCake.customCoords.x, ModConfig.tweaks.netherCake.customCoords.y, ModConfig.tweaks.netherCake.customCoords.z);
                         } else {
-                            coords = new BlockPos(0, player.getPosition().getY() + 1, 0);
+                            coords = new BlockPos(0, world.getSeaLevel() + 1, 0);
                         }
                         TeleporterHandler.teleport(playerMP, -1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
                     }
@@ -85,12 +83,11 @@ public class BlockNetherCake extends BlockCakeBase {
                 player.getFoodStats().addStats(2, 0.1F);
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
                 EntityPlayerMP playerMP = (EntityPlayerMP) player;
-                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                 BlockPos coords;
                 if (ModConfig.tweaks.netherCake.useCustomCoords) {
                     coords = new BlockPos(ModConfig.tweaks.netherCake.customCoords.x, ModConfig.tweaks.netherCake.customCoords.y, ModConfig.tweaks.netherCake.customCoords.z);
                 } else {
-                    coords = new BlockPos(0, player.getPosition().getY() + 1, 0);
+                    coords = new BlockPos(0, world.getSeaLevel() + 1, 0);
                 }
                 TeleporterHandler.teleport(playerMP, -1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
             }

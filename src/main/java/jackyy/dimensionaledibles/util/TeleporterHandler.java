@@ -2,12 +2,15 @@ package jackyy.dimensionaledibles.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.network.play.server.SPacketEntityEffect;
 import net.minecraft.network.play.server.SPacketRespawn;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
@@ -24,24 +27,50 @@ public class TeleporterHandler {
         WorldServer worldServer1 = playerList.getServerInstance().worldServerForDimension(player.dimension);
         player.connection.sendPacket(new SPacketRespawn(player.dimension, player.worldObj.getDifficulty(), player.worldObj.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
         worldServer.removeEntityDangerously(player);
+
         if (player.isBeingRidden()) {
             player.removePassengers();
         }
+
         if (player.isRiding()) {
             player.dismountRidingEntity();
         }
+
         player.isDead = false;
         teleportEntity(player, worldServer, worldServer1);
         playerList.preparePlayer(player, worldServer);
-        player.connection.setPlayerLocation(x, y, z, player.rotationYaw, player.rotationPitch);
+        player.connection.setPlayerLocation(x + 0.5D, y, z + 0.5D, player.rotationYaw, player.rotationPitch);
         player.interactionManager.setWorld(worldServer1);
         playerList.updateTimeAndWeatherForPlayer(player, worldServer1);
         playerList.syncPlayerInventory(player);
+
         for (PotionEffect potioneffect : player.getActivePotionEffects()) {
             player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
         }
+
         FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldDim, dim);
         worldServer1.playSound(null, x + 0.5D, y + 0.5D, z + 0.5D, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.MASTER, 0.25F, new Random().nextFloat() * 0.4F + 0.8F);
+        BlockPos pos = new BlockPos(x, y - 1, z);
+
+        if (!player.capabilities.isCreativeMode) {
+            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+        }
+
+        if (worldServer1.provider.getDimension() == -1) {
+            for (int xx = -1; xx <= 1; xx++) {
+                for (int zz = -1; zz <= 1; zz++) {
+                    if (!worldServer1.getBlockState(pos.add(xx, 0, zz)).isFullBlock()) {
+                        worldServer1.setBlockState(pos.add(xx, 0, zz), Blocks.OBSIDIAN.getDefaultState());
+                    }
+                }
+            }
+        }
+
+        for (int yy = 1; yy <= 3; yy++) {
+            if (worldServer1.getBlockState(pos.add(0, yy, 0)).isFullBlock()) {
+                worldServer1.setBlockToAir(pos.add(0, yy, 0));
+            }
+        }
     }
 
     public static void teleportEntity(Entity entity, WorldServer oldWorld, WorldServer newWorld) {

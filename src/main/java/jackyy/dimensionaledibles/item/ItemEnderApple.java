@@ -33,13 +33,13 @@ public class ItemEnderApple extends ItemFood {
     @Override
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
         if (world.provider.getDimension() != 1) {
-            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             if (ModConfig.tweaks.enderApple.useCustomCoords) {
                 EntityPlayerMP playerMP = (EntityPlayerMP) player;
                 BlockPos coords = new BlockPos(ModConfig.tweaks.enderApple.customCoords.x, ModConfig.tweaks.enderApple.customCoords.y, ModConfig.tweaks.enderApple.customCoords.z);
                 TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
             } else {
                 player.changeDimension(1);
+                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             }
         }
     }

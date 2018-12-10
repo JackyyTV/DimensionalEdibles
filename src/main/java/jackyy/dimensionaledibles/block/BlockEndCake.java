@@ -83,13 +83,13 @@ public class BlockEndCake extends BlockCakeBase {
             if (l < 6) {
                 player.getFoodStats().addStats(2, 0.1F);
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                 if (ModConfig.tweaks.endCake.useCustomCoords) {
                     EntityPlayerMP playerMP = (EntityPlayerMP) player;
                     BlockPos coords = new BlockPos(ModConfig.tweaks.endCake.customCoords.x, ModConfig.tweaks.endCake.customCoords.y, ModConfig.tweaks.endCake.customCoords.z);
                     TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
                 } else {
                     player.changeDimension(1);
+                    player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
                 }
             }
         }
