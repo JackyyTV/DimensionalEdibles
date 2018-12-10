@@ -5,15 +5,13 @@ import jackyy.dimensionaledibles.registry.ModConfig;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,16 +29,17 @@ public class ItemOverworldApple extends ItemFood {
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
         if (world.provider.getDimension() != 0) {
             if (!world.isRemote) {
-                WorldServer worldServer = (WorldServer) world;
-                TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+                EntityPlayerMP playerMP = (EntityPlayerMP) player;
                 BlockPos coords;
-                if (player.getBedLocation(0) != null) {
-                    coords = player.getBedLocation(0);
+                if (ModConfig.tweaks.overworldApple.useCustomCoords) {
+                    coords = new BlockPos(ModConfig.tweaks.overworldApple.customCoords.x, ModConfig.tweaks.overworldApple.customCoords.y, ModConfig.tweaks.overworldApple.customCoords.z);
                 } else {
                     coords = world.getSpawnPoint();
+                    while (world.getBlockState(world.getSpawnPoint()).isFullCube()) {
+                        coords = coords.up(2);
+                    }
                 }
-                tp.teleportToDimension(player, 0, coords.getX(), coords.getY(), coords.getZ());
+                TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
             }
         }
     }

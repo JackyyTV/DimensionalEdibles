@@ -12,9 +12,9 @@ tile.dimensionaledibles.nether_cake.name=Nether Cake
 tile.dimensionaledibles.overworld_cake.name=Overworld Cake
 
 #JEI Compat
-dimensionaledibles.end_cake.jeidesc=Place the cake down and fill it with %d, then right click on the cake and you'll be teleported to The End (spawn platform). The cake has infinite uses as long as it has fuel.
-dimensionaledibles.nether_cake.jeidesc=Place the cake down and fill it with %d, then right click on the cake and you'll be teleported to the Nether (x: 0, z: 0). The cake has infinite uses as long as it has fuel.
-dimensionaledibles.overworld_cake.jeidesc=Place the cake down and fill it with %d, then right click on the cake and you'll be teleported to the Overworld (either player spawn or world spawn). The cake has infinite uses as long as it has fuel.
-dimensionaledibles.ender_apple.jeidesc=Eat the apple and you'll be teleported to The End (spawn platform). Single-use only.
-dimensionaledibles.nether_apple.jeidesc=Eat the apple and you'll be teleported to the Nether (x: 0, z: 0). Single-use only.
-dimensionaledibles.overworld_apple.jeidesc=Eat the apple and you'll be teleported to the Overworld (either player spawn or world spawn). Single-use only.
+dimensionaledibles.end_cake.jeidesc=Place the cake down and fill it with %d, then right click on the cake and you'll be teleported to The End. The cake has infinite uses as long as it is fueled.
+dimensionaledibles.nether_cake.jeidesc=Place the cake down and fill it with %d, then right click on the cake and you'll be teleported to the Nether. The cake has infinite uses as long as it is fueled.
+dimensionaledibles.overworld_cake.jeidesc=Place the cake down and fill it with %d, then right click on the cake and you'll be teleported to the Overworld. The cake has infinite uses as long as it is fueled.
+dimensionaledibles.ender_apple.jeidesc=Eat the apple and you'll be teleported to The End. Single-use only.
+dimensionaledibles.nether_apple.jeidesc=Eat the apple and you'll be teleported to the Nether. Single-use only.
+dimensionaledibles.overworld_apple.jeidesc=Eat the apple and you'll be teleported to the Overworld. Single-use only.
