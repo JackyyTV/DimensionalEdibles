@@ -7,17 +7,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,23 +35,28 @@ public class BlockNetherCake extends BlockCakeBase {
         ItemStack stack = player.getHeldItem(hand);
 
         if (player.capabilities.isCreativeMode) {
-            if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel))) {
+            if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))) {
                 world.setBlockState(pos, getStateFromMeta(0), 2);
                 return true;
             }
             else {
                 if (world.provider.getDimension() != -1) {
                     if (!world.isRemote) {
-                        WorldServer worldServer = (WorldServer) world;
-                        TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                        tp.teleportToDimension(player, -1, 0, player.getPosition().getY() + 1, 0);
+                        EntityPlayerMP playerMP = (EntityPlayerMP) player;
+                        BlockPos coords;
+                        if (ModConfig.tweaks.netherCake.useCustomCoords) {
+                            coords = new BlockPos(ModConfig.tweaks.netherCake.customCoords.x, ModConfig.tweaks.netherCake.customCoords.y, ModConfig.tweaks.netherCake.customCoords.z);
+                        } else {
+                            coords = new BlockPos(0, world.getSeaLevel() + 1, 0);
+                        }
+                        TeleporterHandler.teleport(playerMP, -1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
                     }
                 }
                 return true;
             }
         }
         else {
-            if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCakeFuel))) {
+            if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))) {
                 if (meta >= 0) {
                     world.setBlockState(pos, getStateFromMeta(meta), 2);
                     stack.shrink(1);
@@ -80,17 +83,21 @@ public class BlockNetherCake extends BlockCakeBase {
             if (l < 6) {
                 player.getFoodStats().addStats(2, 0.1F);
                 world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                WorldServer worldServer = (WorldServer) world;
-                TeleporterHandler tp = new TeleporterHandler(worldServer, player.getPosition().getX(), player.getPosition().getY() + 1, player.getPosition().getZ());
-                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                tp.teleportToDimension(player, -1, 0, player.getPosition().getY() + 1, 0);
+                EntityPlayerMP playerMP = (EntityPlayerMP) player;
+                BlockPos coords;
+                if (ModConfig.tweaks.netherCake.useCustomCoords) {
+                    coords = new BlockPos(ModConfig.tweaks.netherCake.customCoords.x, ModConfig.tweaks.netherCake.customCoords.y, ModConfig.tweaks.netherCake.customCoords.z);
+                } else {
+                    coords = new BlockPos(0, world.getSeaLevel() + 1, 0);
+                }
+                TeleporterHandler.teleport(playerMP, -1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
             }
         }
     }
 
     @Override @SuppressWarnings("deprecation")
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return getStateFromMeta(6);
+        return ModConfig.tweaks.netherCake.preFueled ? getStateFromMeta(0) : getStateFromMeta(6);
     }
 
     @Override

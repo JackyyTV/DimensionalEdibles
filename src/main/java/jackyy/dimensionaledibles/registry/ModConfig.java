@@ -29,12 +29,102 @@ public class ModConfig {
     }
 
     public static class Tweaks {
-        @Config.Comment("Set the fuel used by End Cake (Don't change this unless you know what you're doing).")
-        public String endCakeFuel = "minecraft:ender_eye";
-        @Config.Comment("Set the fuel used by Nether Cake (Don't change this unless you know what you're doing).")
-        public String netherCakeFuel = "minecraft:obsidian";
-        @Config.Comment("Set the fuel used by Overworld Cake (Don't change this unless you know what you're doing).")
-        public String overworldCakeFuel = "minecraft:sapling";
+        public EndCake endCake = new EndCake();
+        public static class EndCake {
+            @Config.Comment("Set the fuel used by End Cake (Don't change this unless you know what you're doing).")
+            public String fuel = "minecraft:ender_eye";
+            @Config.Comment("Set to true to make the End Cake pre-fueled upon placed.")
+            public boolean preFueled = false;
+            @Config.Comment({
+                    "Set to true to use custom coordinates for the teleportation.",
+                    "Otherwise, spawn platform will be used by default."
+            })
+            public boolean useCustomCoords = false;
+            public CustomCoords customCoords = new CustomCoords();
+            public static class CustomCoords {
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
+            }
+        }
+        public EnderApple enderApple = new EnderApple();
+        public static class EnderApple {
+            @Config.Comment({
+                    "Set to true to use custom coordinates for the teleportation.",
+                    "Otherwise, spawn platform will be used by default."
+            })
+            public boolean useCustomCoords = false;
+            public CustomCoords customCoords = new CustomCoords();
+            public static class CustomCoords {
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
+            }
+        }
+        public NetherCake netherCake = new NetherCake();
+        public static class NetherCake {
+            @Config.Comment("Set the fuel used by Nether Cake (Don't change this unless you know what you're doing).")
+            public String fuel = "minecraft:obsidian";
+            @Config.Comment("Set to true to make the Nether Cake pre-fueled upon placed.")
+            public boolean preFueled = false;
+            @Config.Comment({
+                    "Set to true to use custom coordinates for the teleportation.",
+                    "Otherwise, x0 z0 will be used by default."
+            })
+            public boolean useCustomCoords = false;
+            public CustomCoords customCoords = new CustomCoords();
+            public static class CustomCoords {
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
+            }
+        }
+        public NetherApple netherApple = new NetherApple();
+        public static class NetherApple {
+            @Config.Comment({
+                    "Set to true to use custom coordinates for the teleportation.",
+                    "Otherwise, x0 z0 will be used by default."
+            })
+            public boolean useCustomCoords = false;
+            public CustomCoords customCoords = new CustomCoords();
+            public static class CustomCoords {
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
+            }
+        }
+        public OverworldCake overworldCake = new OverworldCake();
+        public static class OverworldCake {
+            @Config.Comment("Set the fuel used by Overworld Cake (Don't change this unless you know what you're doing).")
+            public String fuel = "minecraft:sapling";
+            @Config.Comment("Set to true to make the Overworld Cake pre-fueled upon placed.")
+            public boolean preFueled = false;
+            @Config.Comment({
+                    "Set to true to use custom coordinates for the teleportation.",
+                    "Otherwise, world spawn point will be used by default."
+            })
+            public boolean useCustomCoords = false;
+            public CustomCoords customCoords = new CustomCoords();
+            public static class CustomCoords {
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
+            }
+        }
+        public OverworldApple overworldApple = new OverworldApple();
+        public static class OverworldApple {
+            @Config.Comment({
+                    "Set to true to use custom coordinates for the teleportation.",
+                    "Otherwise, world spawn point will be used by default."
+            })
+            public boolean useCustomCoords = false;
+            public CustomCoords customCoords = new CustomCoords();
+            public static class CustomCoords {
+                public double x = 0.0D;
+                public double y = 64.0D;
+                public double z = 0.0D;
+            }
+        }
     }
 
     @Mod.EventBusSubscriber
