@@ -18,3 +18,6 @@ dimensionaledibles.overworld_cake.jeidesc=Place the cake down and fill it with %
 dimensionaledibles.ender_apple.jeidesc=Eat the apple and you'll be teleported to The End. Single-use only.
 dimensionaledibles.nether_apple.jeidesc=Eat the apple and you'll be teleported to the Nether. Single-use only.
 dimensionaledibles.overworld_apple.jeidesc=Eat the apple and you'll be teleported to the Overworld. Single-use only.
+
+#Error Messages
+dimensionaledibles.error.end_portal_disabled=§cActivation of the End Portal has been disabled! Please use the End Cake instead!
