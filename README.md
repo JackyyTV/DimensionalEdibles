@@ -1,7 +1,7 @@
 # DimensionalEdibles
 [![Downloads](http://cf.way2muchnoise.eu/full_dimensional-edibles_downloads.svg)](https://minecraft.curseforge.com/projects/dimensional-edibles) [![MCVersion](http://cf.way2muchnoise.eu/versions/dimensional-edibles.svg)](https://minecraft.curseforge.com/projects/dimensional-edibles)
 
-[![GitHub issues](https://img.shields.io/github/issues/JackyyTV/DimensionalEdibles.svg)](https://github.com/JackyyTV/DimensionalEdibles/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/JackyyTV/DimensionalEdibles.svg)](https://github.com/JackyyTV/Exchangers/pulls) [![license](https://img.shields.io/github/license/JackyyTV/DimensionalEdibles.svg)](../dev-1.12.2/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/JackyyTV/DimensionalEdibles.svg)](https://github.com/JackyyTV/DimensionalEdibles/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/JackyyTV/DimensionalEdibles.svg)](https://github.com/JackyyTV/DimensionalEdibles/pulls) [![license](https://img.shields.io/github/license/JackyyTV/DimensionalEdibles.svg)](../dev-1.12.2/LICENSE)
 
 ---
 
