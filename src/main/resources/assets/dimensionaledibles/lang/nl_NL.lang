@@ -5,11 +5,13 @@ itemGroup.dimensionaledibles = Dimensional Edibles
 item.dimensionaledibles.ender_apple.name = Ender Appel
 item.dimensionaledibles.nether_apple.name = Nether Appel
 item.dimensionaledibles.overworld_apple.name = Overworld Appel
+item.dimensionaledibles.custom_apple.name=Custom Apple
 
 #Blocks
 tile.dimensionaledibles.end_cake.name = Ender Cake
 tile.dimensionaledibles.nether_cake.name = Nether Cake
 tile.dimensionaledibles.overworld_cake.name = Overworld Cake
+tile.dimensionaledibles.custom_cake.name=Custom Dimension Cake
 
 #JEI Compat
 dimensionaledibles.end_cake.jeidesc = Plaats de cake en vul hem met %d, klik met de rechtermuisknop op de cake en je wordt geteleporteerd naar de Ender. De cake heeft oneindig veel toepassingen zolang deze maar is gevuld.

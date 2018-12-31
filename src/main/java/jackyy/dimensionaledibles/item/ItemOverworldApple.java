@@ -6,9 +6,11 @@ import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,43 +20,42 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemOverworldApple extends ItemFood {
 
     public ItemOverworldApple() {
-        super(4, 0.3F, false);
-        setAlwaysEdible();
-        setRegistryName(DimensionalEdibles.MODID + ":overworld_apple");
-        setTranslationKey(DimensionalEdibles.MODID + ".overworld_apple");
-        setCreativeTab(DimensionalEdibles.TAB);
+	super(4, 0.3F, false);
+	setAlwaysEdible();
+	setRegistryName(DimensionalEdibles.MODID + ":overworld_apple");
+	setTranslationKey(DimensionalEdibles.MODID + ".overworld_apple");
+	setCreativeTab(DimensionalEdibles.TAB);
     }
 
     @Override
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-        if (world.provider.getDimension() != 0) {
-            if (!world.isRemote) {
-                EntityPlayerMP playerMP = (EntityPlayerMP) player;
-                BlockPos coords;
-                if (ModConfig.tweaks.overworldApple.useCustomCoords) {
-                    coords = new BlockPos(ModConfig.tweaks.overworldApple.customCoords.x, ModConfig.tweaks.overworldApple.customCoords.y, ModConfig.tweaks.overworldApple.customCoords.z);
-                } else {
-                    coords = world.getSpawnPoint();
-                    while (world.getBlockState(world.getSpawnPoint()).isFullCube()) {
-                        coords = coords.up(2);
-                    }
-                }
-                TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
-            }
-        }
+	if (world.provider.getDimension() != 0) {
+	    if (!world.isRemote) {
+		EntityPlayerMP playerMP = (EntityPlayerMP) player;
+		BlockPos coords;
+		if (ModConfig.tweaks.overworldApple.useCustomCoords) {
+		    coords = new BlockPos(ModConfig.tweaks.overworldApple.customCoords.x, ModConfig.tweaks.overworldApple.customCoords.y, ModConfig.tweaks.overworldApple.customCoords.z);
+		} else {
+		    coords = TeleporterHandler.getDimensionPosition(playerMP, 0, player.getPosition());
+		}
+		TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+		TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
+		player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+	    }
+	}
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (isInCreativeTab(tab))
-            if (ModConfig.general.overworldApple)
-                list.add(new ItemStack(this));
+	if (isInCreativeTab(tab))
+	    if (ModConfig.general.overworldApple)
+		list.add(new ItemStack(this));
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+	return EnumRarity.EPIC;
     }
 
 }

@@ -1,5 +1,6 @@
 package jackyy.dimensionaledibles.proxy;
 
+import jackyy.dimensionaledibles.event.CustomCakeNameDisplayEvent;
 import jackyy.dimensionaledibles.registry.ModBlocks;
 import jackyy.dimensionaledibles.registry.ModItems;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -14,6 +15,7 @@ public class ClientProxy extends CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new CustomCakeNameDisplayEvent());
     }
 
     @SubscribeEvent

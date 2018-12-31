@@ -8,10 +8,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -24,86 +22,74 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockEndCake extends BlockCakeBase {
 
     public BlockEndCake() {
-        super();
-        setRegistryName(DimensionalEdibles.MODID + ":end_cake");
-        setTranslationKey(DimensionalEdibles.MODID + ".end_cake");
+	super();
+	setRegistryName(DimensionalEdibles.MODID + ":end_cake");
+	setTranslationKey(DimensionalEdibles.MODID + ".end_cake");
     }
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        int meta = getMetaFromState(world.getBlockState(pos)) - 1;
-        ItemStack stack = player.getHeldItem(hand);
+	int meta = getMetaFromState(world.getBlockState(pos)) - 1;
+	ItemStack stack = player.getHeldItem(hand);
 
-        if (player.capabilities.isCreativeMode) {
-            if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel))) {
-                world.setBlockState(pos, getStateFromMeta(0), 2);
-                return true;
-            }
-            else {
-                if (world.provider.getDimension() != 1) {
-                    if (!world.isRemote) {
-                        if (ModConfig.tweaks.endCake.useCustomCoords) {
-                            EntityPlayerMP playerMP = (EntityPlayerMP) player;
-                            BlockPos coords = new BlockPos(ModConfig.tweaks.endCake.customCoords.x, ModConfig.tweaks.endCake.customCoords.y, ModConfig.tweaks.endCake.customCoords.z);
-                            TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
-                        } else {
-                            player.changeDimension(1);
-                        }
-                        return true;
-                    }
-                }
-            }
-        }
-        else {
-            if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel))) {
-                if (meta >= 0) {
-                    world.setBlockState(pos, getStateFromMeta(meta), 2);
-                    stack.shrink(1);
-                    return true;
-                }
-            }
-            else {
-                if (world.provider.getDimension() != 1) {
-                    if (!world.isRemote) {
-                        consumeCake(world, pos, player);
-                        return true;
-                    }
-                }
-            }
-        }
+	if (player.capabilities.isCreativeMode || meta < 0) {
+	    meta = 0;
+	}
 
-        return false;
+	if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel))) {
+	    world.setBlockState(pos, getStateFromMeta(meta), 2);
+	    if (!player.capabilities.isCreativeMode) {
+		stack.shrink(1);
+	    }
+	    return true;
+	} else {
+	    if (world.provider.getDimension() != 1) {
+		if (!world.isRemote) {
+		    if (player.capabilities.isCreativeMode) {
+			teleportPlayer(world, player);
+		    } else {
+			consumeCake(world, pos, player);
+		    }
+		}
+	    }
+	}
+	return true;
+    }
+
+    private void teleportPlayer(World world, EntityPlayer player) {
+	EntityPlayerMP playerMP = (EntityPlayerMP) player;
+	BlockPos coords;
+	if (ModConfig.tweaks.endCake.useCustomCoords) {
+	    coords = new BlockPos(ModConfig.tweaks.endCake.customCoords.x, ModConfig.tweaks.endCake.customCoords.y, ModConfig.tweaks.endCake.customCoords.z);
+	} else {
+	    coords = TeleporterHandler.getDimensionPosition(playerMP, 1, player.getPosition());
+	}
+	TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+	TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
     }
 
     private void consumeCake(World world, BlockPos pos, EntityPlayer player) {
-        if (player.canEat(true)) {
-            int l = world.getBlockState(pos).getValue(BITES);
+	if (player.canEat(true)) {
+	    int l = world.getBlockState(pos).getValue(BITES);
 
-            if (l < 6) {
-                player.getFoodStats().addStats(2, 0.1F);
-                world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                if (ModConfig.tweaks.endCake.useCustomCoords) {
-                    EntityPlayerMP playerMP = (EntityPlayerMP) player;
-                    BlockPos coords = new BlockPos(ModConfig.tweaks.endCake.customCoords.x, ModConfig.tweaks.endCake.customCoords.y, ModConfig.tweaks.endCake.customCoords.z);
-                    TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
-                } else {
-                    player.changeDimension(1);
-                    player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-                }
-            }
-        }
+	    if (l < 6) {
+		player.getFoodStats().addStats(2, 0.1F);
+		world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
+		teleportPlayer(world, player);
+	    }
+	}
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return ModConfig.tweaks.endCake.preFueled ? getStateFromMeta(0) : getStateFromMeta(6);
+	return ModConfig.tweaks.endCake.preFueled ? getStateFromMeta(0) : getStateFromMeta(6);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (ModConfig.general.endCake)
-            list.add(new ItemStack(this));
+	if (ModConfig.general.endCake)
+	    list.add(new ItemStack(this));
     }
 
 }

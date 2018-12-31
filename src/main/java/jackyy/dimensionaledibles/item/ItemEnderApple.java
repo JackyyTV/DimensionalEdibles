@@ -20,38 +20,42 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemEnderApple extends ItemFood {
 
     public ItemEnderApple() {
-        super(4, 0.3F, false);
-        setAlwaysEdible();
-        setRegistryName(DimensionalEdibles.MODID + ":ender_apple");
-        setTranslationKey(DimensionalEdibles.MODID + ".ender_apple");
-        setCreativeTab(DimensionalEdibles.TAB);
+	super(4, 0.3F, false);
+	setAlwaysEdible();
+	setRegistryName(DimensionalEdibles.MODID + ":ender_apple");
+	setTranslationKey(DimensionalEdibles.MODID + ".ender_apple");
+	setCreativeTab(DimensionalEdibles.TAB);
     }
 
     @Override
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-        if (world.provider.getDimension() != 1) {
-            if (ModConfig.tweaks.enderApple.useCustomCoords) {
-                EntityPlayerMP playerMP = (EntityPlayerMP) player;
-                BlockPos coords = new BlockPos(ModConfig.tweaks.enderApple.customCoords.x, ModConfig.tweaks.enderApple.customCoords.y, ModConfig.tweaks.enderApple.customCoords.z);
-                TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
-            } else {
-                player.changeDimension(1);
-                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
-            }
-        }
+	if (world.provider.getDimension() != 1) {
+	    if (!world.isRemote) {
+		EntityPlayerMP playerMP = (EntityPlayerMP) player;
+		BlockPos coords;
+		if (ModConfig.tweaks.enderApple.useCustomCoords) {
+		    coords = new BlockPos(ModConfig.tweaks.enderApple.customCoords.x, ModConfig.tweaks.enderApple.customCoords.y, ModConfig.tweaks.enderApple.customCoords.z);
+		} else {
+		    coords = TeleporterHandler.getDimensionPosition(playerMP, 1, player.getPosition());
+		}
+		TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+		TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
+		player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
+	    }
+	}
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
-        if (isInCreativeTab(tab))
-            if (ModConfig.general.enderApple)
-                list.add(new ItemStack(this));
+	if (isInCreativeTab(tab))
+	    if (ModConfig.general.enderApple)
+		list.add(new ItemStack(this));
     }
 
     @Override
     public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+	return EnumRarity.EPIC;
     }
 
 }

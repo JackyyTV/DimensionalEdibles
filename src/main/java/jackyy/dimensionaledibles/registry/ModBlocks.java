@@ -1,5 +1,6 @@
 package jackyy.dimensionaledibles.registry;
 
+import jackyy.dimensionaledibles.block.BlockCustomCake;
 import jackyy.dimensionaledibles.block.BlockEndCake;
 import jackyy.dimensionaledibles.block.BlockNetherCake;
 import jackyy.dimensionaledibles.block.BlockOverworldCake;
@@ -16,12 +17,14 @@ public class ModBlocks {
     public static BlockEndCake endCake = new BlockEndCake();
     public static BlockNetherCake netherCake = new BlockNetherCake();
     public static BlockOverworldCake overworldCake = new BlockOverworldCake();
+    public static BlockCustomCake customCake = new BlockCustomCake();
 
     public static void init(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(
                 endCake,
                 netherCake,
-                overworldCake
+                overworldCake,
+                customCake
         );
     }
 
@@ -34,6 +37,8 @@ public class ModBlocks {
                     new ModelResourceLocation(netherCake.getRegistryName(), "inventory"));
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(overworldCake), i,
                     new ModelResourceLocation(overworldCake.getRegistryName(), "inventory"));
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(customCake), i,
+                    new ModelResourceLocation(customCake.getRegistryName(), "inventory"));
         }
     }
 
