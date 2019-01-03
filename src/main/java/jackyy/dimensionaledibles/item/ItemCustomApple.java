@@ -33,12 +33,18 @@ public class ItemCustomApple extends ItemFood {
 
     @Override
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-	if (world.provider.getDimension() != 1) {
+	int dimension;
+	NBTTagCompound nbt = stack.getTagCompound();
+	if (nbt == null || !nbt.hasKey("dimID")) {
+	    return;
+	}
+	dimension= nbt.getInteger("dimID");
+	if (world.provider.getDimension() != dimension) {
 	    if (!world.isRemote) {
 		EntityPlayerMP playerMP = (EntityPlayerMP) player;
-		BlockPos coords = TeleporterHandler.getDimensionPosition(playerMP, 1, player.getPosition());
+		BlockPos coords = TeleporterHandler.getDimensionPosition(playerMP, dimension, player.getPosition());
 		TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
-		TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
+		TeleporterHandler.teleport(playerMP, dimension, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
 		player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
 	    }
 	}

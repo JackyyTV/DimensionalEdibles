@@ -3,8 +3,10 @@ package jackyy.dimensionaledibles.block;
 import org.apache.logging.log4j.Level;
 
 import jackyy.dimensionaledibles.DimensionalEdibles;
+import jackyy.dimensionaledibles.block.tileentity.TileEntityCustomCake;
 import jackyy.dimensionaledibles.registry.ModConfig;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -21,7 +24,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCustomCake extends BlockCakeBase {
+public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvider {
     public BlockCustomCake() {
 	super();
 	setRegistryName(DimensionalEdibles.MODID + ":custom_cake");
@@ -36,19 +39,25 @@ public class BlockCustomCake extends BlockCakeBase {
 	    meta = 0;
 	}
 
-	if (world.provider.getDimension() != 1) {
+	int dimension = 0;
+	TileEntity ent = world.getTileEntity(pos);
+	if (ent != null && ent instanceof TileEntityCustomCake) {
+	    dimension = ((TileEntityCustomCake) ent).getDimensionID();
+	}
+	if (world.provider.getDimension() != dimension) {
 	    if (!world.isRemote) {
-		teleportPlayer(world, player);
+		teleportPlayer(world, player, dimension);
 	    }
 	}
 	return true;
     }
 
-    private void teleportPlayer(World world, EntityPlayer player) {
+    private void teleportPlayer(World world, EntityPlayer player, int dimension) {
+
 	EntityPlayerMP playerMP = (EntityPlayerMP) player;
-	BlockPos coords = TeleporterHandler.getDimensionPosition(playerMP, 1, player.getPosition());
+	BlockPos coords = TeleporterHandler.getDimensionPosition(playerMP, dimension, player.getPosition());
 	TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
-	TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
+	TeleporterHandler.teleport(playerMP, dimension, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
     }
 
     @Override
@@ -59,7 +68,7 @@ public class BlockCustomCake extends BlockCakeBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-	if (ModConfig.general.customApple) {
+	if (ModConfig.general.customCake) {
 	    ItemStack stack;
 	    for (String s : ModConfig.tweaks.customEdible.dimensions) {
 		try {
@@ -82,5 +91,10 @@ public class BlockCustomCake extends BlockCakeBase {
 		}
 	    }
 	}
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+	return new TileEntityCustomCake();
     }
 }

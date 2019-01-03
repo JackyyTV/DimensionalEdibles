@@ -1,40 +1,29 @@
-package jackyy.dimensionaledibles.event;
+package jackyy.dimensionaledibles.renderer;
 
 import org.lwjgl.opengl.GL11;
 
-import jackyy.dimensionaledibles.block.BlockCustomCake;
-import net.minecraft.block.state.IBlockState;
+import jackyy.dimensionaledibles.block.tileentity.TileEntityCustomCake;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.common.DimensionManager;
 
-public class CustomCakeNameDisplayEvent {
+public class TileCustomCakeRenderer extends TileEntitySpecialRenderer<TileEntityCustomCake> {
+    public static final TileCustomCakeRenderer INSTANCE = new TileCustomCakeRenderer();
 
-    @SubscribeEvent
-    public void onNameRender(DrawBlockHighlightEvent e) {
-	BlockPos pos = e.getTarget().getBlockPos();
-	if (e.getPlayer().getEntityWorld().getBlockState(pos).getBlock() instanceof BlockCustomCake) {
-	    IBlockState cake = e.getPlayer().getEntityWorld().getBlockState(pos);
-	    String dimName = "ERROR Unconfigured!";
-	    double x = pos.getX() + 0.5;
-	    double y = pos.getY() + 2;
-	    double z = pos.getZ() + 0.5;
-	    System.out.println(pos);
-	    renderNameTag(dimName, x, y, z);
-	}
+    private TileCustomCakeRenderer() {
     }
 
-    private void renderNameTag(String name, double x, double y, double z) {
+    @Override
+    public void render(TileEntityCustomCake cake, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_) {
+	String dimName = DimensionManager.getProviderType(cake.getDimensionID()).getName();
 	float scale = 0.02666667F;
-	float height = 0.8F;
 	GlStateManager.pushMatrix();
-	GlStateManager.translate(x, y + height + 0.5F, z);
+	GlStateManager.translate(x + 0.5, y + 1, z + 0.5F);
 	GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
 	GlStateManager.scale(-scale, -scale, scale);
 	GlStateManager.rotate(Minecraft.getMinecraft().getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
@@ -49,17 +38,17 @@ public class CustomCakeNameDisplayEvent {
 	GlStateManager.disableTexture2D();
 	vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
 	FontRenderer fontrenderer = Minecraft.getMinecraft().fontRenderer;
-	int width = fontrenderer.getStringWidth(name) / 2;
+	int width = fontrenderer.getStringWidth(dimName) / 2;
 	vertexbuffer.pos(x - width - 1, y - 1, z).color(0F, 0F, 0, 0.25F).endVertex();
 	vertexbuffer.pos(x - width - 1, y + 8, z).color(0F, 0F, 0, 0.25F).endVertex();
 	vertexbuffer.pos(x + width + 1, y + 8, z).color(0F, 0F, 0, 0.25F).endVertex();
 	vertexbuffer.pos(x + width + 1, y - 1, z).color(0F, 0F, 0, 0.25F).endVertex();
 	tessellator.draw();
 	GlStateManager.enableTexture2D();
-	fontrenderer.drawString(name, -fontrenderer.getStringWidth(name) / 2, 0, 553648127);
+	fontrenderer.drawString(dimName, -fontrenderer.getStringWidth(dimName) / 2, 0, 553648127);
 	GlStateManager.enableDepth();
 	GlStateManager.depthMask(true);
-	fontrenderer.drawString(name, -fontrenderer.getStringWidth(name) / 2, 0, -1);
+	fontrenderer.drawString(dimName, -fontrenderer.getStringWidth(dimName) / 2, 0, -1);
 	GlStateManager.enableLighting();
 	GlStateManager.disableBlend();
 	GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

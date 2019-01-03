@@ -1,15 +1,22 @@
 package jackyy.dimensionaledibles.registry;
 
+import jackyy.dimensionaledibles.block.tileentity.TileEntityCustomCake;
 import jackyy.dimensionaledibles.item.ItemCustomApple;
 import jackyy.dimensionaledibles.item.ItemEnderApple;
 import jackyy.dimensionaledibles.item.ItemNetherApple;
 import jackyy.dimensionaledibles.item.ItemOverworldApple;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.RegistryEvent;
@@ -52,6 +59,28 @@ public class ModItems {
 		    return "ERROR Unconfigured!";
 		}
 		return DimensionManager.getProviderType(nbt.getInteger("dimID")).getName();
+	    }
+
+	    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, IBlockState blockState) {
+		boolean placed = super.placeBlockAt(stack, player, world, pos, facing, hitX, hitY, hitZ, blockState);
+
+		TileEntity te = world.getTileEntity(pos);
+		if (te != null) {
+		    int dimID = this.getDimID(stack);
+		    if (te instanceof TileEntityCustomCake) {
+			((TileEntityCustomCake) te).setDimensionID(dimID);
+		    }
+		}
+
+		return placed;
+	    }
+
+	    public int getDimID(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null || !nbt.hasKey("dimID")) {
+		    return 0;
+		}
+		return nbt.getInteger("dimID");
 	    }
 
 	}.setRegistryName(ModBlocks.customCake.getRegistryName()), enderApple, netherApple, overworldApple, customApple);
