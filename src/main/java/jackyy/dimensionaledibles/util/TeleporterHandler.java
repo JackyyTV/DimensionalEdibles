@@ -28,6 +28,8 @@ import jackyy.dimensionaledibles.DimensionalEdibles;
 public class TeleporterHandler {
 
     public static void teleport(EntityPlayerMP player, int dim, double x, double y, double z, PlayerList playerList) {
+	if (!net.minecraftforge.common.ForgeHooks.onTravelToDimension(player, dim))
+	    return;
 	int oldDim = player.dimension;
 	WorldServer worldServer = playerList.getServerInstance().getWorld(player.dimension);
 	player.dimension = dim;
