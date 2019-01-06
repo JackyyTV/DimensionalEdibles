@@ -72,8 +72,12 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
 	    ItemStack stack;
 	    for (String s : ModConfig.tweaks.customEdible.dimensions) {
 		try {
-
-		    int dimension = Integer.parseInt(s);
+		    String[] parts = s.split(",");
+		    if (parts.length < 2) {
+			DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeName>");
+			continue;
+		    }
+		    int dimension = Integer.parseInt(parts[0].trim());
 		    if (DimensionManager.isDimensionRegistered(dimension)) {
 			stack = new ItemStack(this);
 			NBTTagCompound nbt = stack.getTagCompound();
@@ -82,12 +86,13 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
 			    stack.setTagCompound(nbt);
 			}
 			nbt.setInteger("dimID", dimension);
+			nbt.setString("cakeName", parts[1].trim());
 			list.add(stack);
 		    } else {
-			DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid dimension id! (Needs to be a number)");
+			DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension id! (Needs to be a number)");
 		    }
 		} catch (NumberFormatException e) {
-		    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid dimension id! (Needs to be a number)");
+		    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension id needs to be a number!");
 		}
 	    }
 	}

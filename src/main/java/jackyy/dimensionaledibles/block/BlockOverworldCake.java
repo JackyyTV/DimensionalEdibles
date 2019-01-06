@@ -97,7 +97,7 @@ public class BlockOverworldCake extends BlockCakeBase implements ITileEntityProv
     
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-	return new TileEntityCustomCake(0);
+	return new TileEntityCustomCake(0, "Overworld");
     }
 
 }

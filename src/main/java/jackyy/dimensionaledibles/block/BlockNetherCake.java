@@ -97,7 +97,7 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
     
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-	return new TileEntityCustomCake(-1);
+	return new TileEntityCustomCake(-1, "Nether");
     }
 
 }

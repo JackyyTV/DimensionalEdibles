@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraftforge.common.DimensionManager;
 
 public class TileCustomCakeRenderer extends TileEntitySpecialRenderer<TileEntityCustomCake> {
     public static final TileCustomCakeRenderer INSTANCE = new TileCustomCakeRenderer();
@@ -20,7 +19,7 @@ public class TileCustomCakeRenderer extends TileEntitySpecialRenderer<TileEntity
 
     @Override
     public void render(TileEntityCustomCake cake, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_) {
-	String dimName = DimensionManager.getProviderType(cake.getDimensionID()).getName();
+	String dimName = cake.getCakeName();
 	float scale = 0.02666667F;
 	GlStateManager.pushMatrix();
 	GlStateManager.translate(x + 0.5, y + 1, z + 0.5F);

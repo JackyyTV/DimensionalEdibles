@@ -7,13 +7,15 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityCustomCake extends TileEntity {
     private int dimensionID;
+    private String cakeName;
 
     public TileEntityCustomCake() {
-	this(0);
+	this(0, "Overworld Cake");
     }
 
-    public TileEntityCustomCake(int dimID) {
+    public TileEntityCustomCake(int dimID, String name) {
 	this.dimensionID = dimID;
+	this.cakeName = name;
     }
 
     public int getDimensionID() {
@@ -24,10 +26,19 @@ public class TileEntityCustomCake extends TileEntity {
 	this.dimensionID = dimID;
     }
 
+    public String getCakeName() {
+	return this.cakeName;
+    }
+
+    public void setCakeName(String name) {
+	this.cakeName = name;
+    }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 	super.writeToNBT(nbt);
 	nbt.setInteger("dimID", this.getDimensionID());
+	nbt.setString("cakeName", this.getCakeName());
 	return nbt;
     }
 
@@ -35,6 +46,7 @@ public class TileEntityCustomCake extends TileEntity {
     public void readFromNBT(NBTTagCompound nbt) {
 	super.readFromNBT(nbt);
 	this.dimensionID = nbt.getInteger("dimID");
+	this.cakeName = nbt.getString("cakeName");
     }
 
     @Override

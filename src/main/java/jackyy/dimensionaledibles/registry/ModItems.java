@@ -18,7 +18,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -54,11 +53,7 @@ public class ModItems {
 
 	    @Override
 	    public String getItemStackDisplayName(ItemStack stack) {
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null || !nbt.hasKey("dimID")) {
-		    return "ERROR Unconfigured!";
-		}
-		return DimensionManager.getProviderType(nbt.getInteger("dimID")).getName();
+		return getCakeName(stack) + " Cake";
 	    }
 
 	    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, IBlockState blockState) {
@@ -66,13 +61,21 @@ public class ModItems {
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te != null) {
-		    int dimID = this.getDimID(stack);
 		    if (te instanceof TileEntityCustomCake) {
-			((TileEntityCustomCake) te).setDimensionID(dimID);
+			((TileEntityCustomCake) te).setDimensionID(getDimID(stack));
+			((TileEntityCustomCake) te).setCakeName(getCakeName(stack));
 		    }
 		}
 
 		return placed;
+	    }
+
+	    public String getCakeName(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null || !nbt.hasKey("cakeName")) {
+		    return "ERROR Unconfigured!";
+		}
+		return nbt.getString("cakeName");
 	    }
 
 	    public int getDimID(ItemStack stack) {

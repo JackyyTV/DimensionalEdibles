@@ -132,7 +132,7 @@ public class ModConfig {
 	public CustomEdible customEdible = new CustomEdible();
 
 	public static class CustomEdible {
-	    @Config.Comment("List of dimensions to make cakes for!")
+	    @Config.Comment("List of dimensions to make cakes for! Format : <Dimension ID>, <Cake Name> \nNOTE: \"Cake\" is auto appended onto the end of the item and block name")
 	    public String[] dimensions = new String[0];
 	}
     }

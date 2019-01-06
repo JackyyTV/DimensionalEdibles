@@ -97,7 +97,7 @@ public class BlockEndCake extends BlockCakeBase implements ITileEntityProvider {
     
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-	return new TileEntityCustomCake(1);
+	return new TileEntityCustomCake(1, "End");
     }
 
 }
