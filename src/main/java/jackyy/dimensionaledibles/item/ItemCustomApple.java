@@ -90,7 +90,7 @@ public class ItemCustomApple extends ItemFood {
 	if (nbt == null || !nbt.hasKey("cakeName")) {
 	    return "ERROR Unconfigured!";
 	}
-	return nbt.getString("cakeName") + " Cake";
+	return nbt.getString("cakeName") + " Apple";
     }
 
     @Override
