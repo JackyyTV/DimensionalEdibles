@@ -40,10 +40,7 @@ public class ModConfig {
             public String fuel = "minecraft:ender_eye";
             @Config.Comment("Set to true to make the End Cake pre-fueled upon placed.")
             public boolean preFueled = false;
-            @Config.Comment({
-                    "Set to true to use custom coordinates for the teleportation.",
-                    "Otherwise, spawn platform will be used by default."
-            })
+            @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
@@ -55,10 +52,7 @@ public class ModConfig {
 
         public EnderApple enderApple = new EnderApple();
         public static class EnderApple {
-            @Config.Comment({
-                    "Set to true to use custom coordinates for the teleportation.",
-                    "Otherwise, spawn platform will be used by default."
-            })
+            @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
@@ -74,10 +68,7 @@ public class ModConfig {
             public String fuel = "minecraft:obsidian";
             @Config.Comment("Set to true to make the Nether Cake pre-fueled upon placed.")
             public boolean preFueled = false;
-            @Config.Comment({
-                    "Set to true to use custom coordinates for the teleportation.",
-                    "Otherwise, x0 z0 will be used by default."
-            })
+            @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
@@ -89,10 +80,7 @@ public class ModConfig {
 
         public NetherApple netherApple = new NetherApple();
         public static class NetherApple {
-            @Config.Comment({
-                    "Set to true to use custom coordinates for the teleportation.",
-                    "Otherwise, x0 z0 will be used by default."
-            })
+            @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
@@ -108,10 +96,7 @@ public class ModConfig {
             public String fuel = "minecraft:sapling";
             @Config.Comment("Set to true to make the Overworld Cake pre-fueled upon placed.")
             public boolean preFueled = false;
-            @Config.Comment({
-                    "Set to true to use custom coordinates for the teleportation.",
-                    "Otherwise, world spawn point will be used by default."
-            })
+            @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
@@ -123,10 +108,7 @@ public class ModConfig {
 
         public OverworldApple overworldApple = new OverworldApple();
         public static class OverworldApple {
-            @Config.Comment({
-                    "Set to true to use custom coordinates for the teleportation.",
-                    "Otherwise, world spawn point will be used by default."
-            })
+            @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
@@ -140,8 +122,9 @@ public class ModConfig {
         public static class CustomEdible {
             @Config.Comment({
                     "Set a list of dimensions to add cakes / apples for.",
-                    "Format : <Dimension ID>, <Cake Name>",
-                    "NOTE: \"Cake\" is auto appended onto the end of the item and block name"
+                    "Format: <Dimension ID>, <Cake / Apple Name>",
+                    "Example: 0, Overworld",
+                    "Note: \"Cake\" is automatically appended onto the end of the name for cakes."
             })
             public String[] dimensions = new String[0];
             public CustomCake customCake = new CustomCake();
@@ -150,7 +133,8 @@ public class ModConfig {
                 public boolean preFueled = false;
                 @Config.Comment({
                         "Set the fuel used by Custom Cakes.",
-                        "Format : <Dimension ID>, <Fuel Registry Name (e.g. minecraft:apple)>"
+                        "Format: <Dimension ID>, <Fuel Registry Name>",
+                        "Example: 0, minecraft:apple"
                 })
                 public String[] fuel = new String[0];
             }
