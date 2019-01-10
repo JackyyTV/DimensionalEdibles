@@ -71,7 +71,7 @@ public class ItemCustomApple extends ItemFood {
                                 stack.setTagCompound(nbt);
                             }
                             nbt.setInteger("dimID", dimension);
-                            nbt.setString("cakeName", parts[1].trim());
+                            nbt.setString("appleName", parts[1].trim());
                             list.add(stack);
                         } else {
                             DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension ID! (Needs to be a number)");
@@ -87,10 +87,10 @@ public class ItemCustomApple extends ItemFood {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
-        if (nbt == null || !nbt.hasKey("cakeName")) {
-            return "Custom Apple (Unconfigured)";
+        if (nbt == null || !nbt.hasKey("appleName")) {
+            return "Custom Apple";
         }
-        return nbt.getString("cakeName") + " Apple";
+        return nbt.getString("appleName") + " Apple";
     }
 
     @Override

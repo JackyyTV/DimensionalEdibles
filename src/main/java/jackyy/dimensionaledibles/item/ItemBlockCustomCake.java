@@ -48,7 +48,7 @@ public class ItemBlockCustomCake extends ItemBlock {
     public String getCakeName(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null || !nbt.hasKey("cakeName")) {
-            return "Custom Cake (Unconfigured)";
+            return "Custom";
         }
         return nbt.getString("cakeName");
     }

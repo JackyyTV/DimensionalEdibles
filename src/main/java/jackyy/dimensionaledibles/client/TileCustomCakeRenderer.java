@@ -15,7 +15,7 @@ public class TileCustomCakeRenderer extends TileEntitySpecialRenderer<TileDimens
     public static final TileCustomCakeRenderer INSTANCE = new TileCustomCakeRenderer();
 
     @Override
-    public void render(TileDimensionCake cake, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_) {
+    public void render(TileDimensionCake cake, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         String dimName = cake.getCakeName();
         float scale = 0.02666667F;
         GlStateManager.pushMatrix();

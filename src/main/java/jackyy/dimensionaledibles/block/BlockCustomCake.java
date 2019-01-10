@@ -53,8 +53,7 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
                     DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeFuel>");
                     continue;
                 }
-                int dim = Integer.parseInt(parts[0].trim());
-                if (dim == dimension) {
+                if (Integer.parseInt(parts[0].trim()) == dimension) {
                     fuel = parts[1].trim();
                 }
             } catch (NumberFormatException e) {
