@@ -1,9 +1,9 @@
 package jackyy.dimensionaledibles.proxy;
 
 import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
+import jackyy.dimensionaledibles.client.TileCustomCakeRenderer;
 import jackyy.dimensionaledibles.registry.ModBlocks;
 import jackyy.dimensionaledibles.registry.ModItems;
-import jackyy.dimensionaledibles.renderer.TileCustomCakeRenderer;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;

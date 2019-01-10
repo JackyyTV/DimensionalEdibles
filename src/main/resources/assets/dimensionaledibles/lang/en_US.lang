@@ -11,7 +11,7 @@ item.dimensionaledibles.custom_apple.name=Custom Apple
 tile.dimensionaledibles.end_cake.name=End Cake
 tile.dimensionaledibles.nether_cake.name=Nether Cake
 tile.dimensionaledibles.overworld_cake.name=Overworld Cake
-tile.dimensionaledibles.custom_cake.name=Custom Dimension Cake
+tile.dimensionaledibles.custom_cake.name=Custom Cake
 
 #JEI Compat
 dimensionaledibles.end_cake.jeidesc=Place the cake down and fill it with %d, then right click on the cake and you'll be teleported to The End. The cake has infinite uses as long as it is fueled.

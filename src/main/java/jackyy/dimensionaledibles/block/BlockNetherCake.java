@@ -65,9 +65,9 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
         if (ModConfig.tweaks.netherCake.useCustomCoords) {
             coords = new BlockPos(ModConfig.tweaks.netherCake.customCoords.x, ModConfig.tweaks.netherCake.customCoords.y, ModConfig.tweaks.netherCake.customCoords.z);
         } else {
-            coords = TeleporterHandler.getDimensionPosition(playerMP, -1, player.getPosition());
+            coords = TeleporterHandler.getDimPos(playerMP, -1, player.getPosition());
         }
-        TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+        TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
         TeleporterHandler.teleport(playerMP, -1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
     }
 

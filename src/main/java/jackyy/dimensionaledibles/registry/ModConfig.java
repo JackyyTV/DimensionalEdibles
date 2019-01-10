@@ -33,8 +33,8 @@ public class ModConfig {
     }
 
     public static class Tweaks {
-        public EndCake endCake = new EndCake();
 
+        public EndCake endCake = new EndCake();
         public static class EndCake {
             @Config.Comment("Set the fuel used by End Cake (Don't change this unless you know what you're doing).")
             public String fuel = "minecraft:ender_eye";
@@ -52,7 +52,6 @@ public class ModConfig {
         }
 
         public EnderApple enderApple = new EnderApple();
-
         public static class EnderApple {
             @Config.Comment({"Set to true to use custom coordinates for the teleportation.", "Otherwise, spawn platform will be used by default."})
             public boolean useCustomCoords = false;
@@ -66,7 +65,6 @@ public class ModConfig {
         }
 
         public NetherCake netherCake = new NetherCake();
-
         public static class NetherCake {
             @Config.Comment("Set the fuel used by Nether Cake (Don't change this unless you know what you're doing).")
             public String fuel = "minecraft:obsidian";
@@ -84,7 +82,6 @@ public class ModConfig {
         }
 
         public NetherApple netherApple = new NetherApple();
-
         public static class NetherApple {
             @Config.Comment({"Set to true to use custom coordinates for the teleportation.", "Otherwise, x0 z0 will be used by default."})
             public boolean useCustomCoords = false;
@@ -98,7 +95,6 @@ public class ModConfig {
         }
 
         public OverworldCake overworldCake = new OverworldCake();
-
         public static class OverworldCake {
             @Config.Comment("Set the fuel used by Overworld Cake (Don't change this unless you know what you're doing).")
             public String fuel = "minecraft:sapling";
@@ -116,7 +112,6 @@ public class ModConfig {
         }
 
         public OverworldApple overworldApple = new OverworldApple();
-
         public static class OverworldApple {
             @Config.Comment({"Set to true to use custom coordinates for the teleportation.", "Otherwise, world spawn point will be used by default."})
             public boolean useCustomCoords = false;
@@ -130,11 +125,11 @@ public class ModConfig {
         }
 
         public CustomEdible customEdible = new CustomEdible();
-
         public static class CustomEdible {
-            @Config.Comment("List of dimensions to make cakes for! Format : <Dimension ID>, <Cake Name> \nNOTE: \"Cake\" is auto appended onto the end of the item and block name")
+            @Config.Comment({"Set a list of dimensions to add cakes / apples for.", "Format : <Dimension ID>, <Cake Name>", "NOTE: \"Cake\" is auto appended onto the end of the item and block name"})
             public String[] dimensions = new String[0];
         }
+
     }
 
     @Mod.EventBusSubscriber

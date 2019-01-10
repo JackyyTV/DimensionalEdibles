@@ -35,15 +35,12 @@ public class TeleporterHandler {
         WorldServer worldServer1 = playerList.getServerInstance().getWorld(player.dimension);
         player.connection.sendPacket(new SPacketRespawn(player.dimension, player.world.getDifficulty(), player.world.getWorldInfo().getTerrainType(), player.interactionManager.getGameType()));
         worldServer.removeEntityDangerously(player);
-
         if (player.isBeingRidden()) {
             player.removePassengers();
         }
-
         if (player.isRiding()) {
             player.dismountRidingEntity();
         }
-
         player.isDead = false;
         teleportEntity(player, worldServer, worldServer1);
         playerList.preparePlayer(player, worldServer);
@@ -51,19 +48,15 @@ public class TeleporterHandler {
         player.interactionManager.setWorld(worldServer1);
         playerList.updateTimeAndWeatherForPlayer(player, worldServer1);
         playerList.syncPlayerInventory(player);
-
         for (PotionEffect potioneffect : player.getActivePotionEffects()) {
             player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potioneffect));
         }
-
         FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldDim, dim);
         worldServer1.playSound(null, x + 0.5D, y + 0.5D, z + 0.5D, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.MASTER, 0.25F, new Random().nextFloat() * 0.4F + 0.8F);
         BlockPos pos = new BlockPos(x, y - 1, z);
-
         if (!player.capabilities.isCreativeMode) {
             player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
         }
-
         if (worldServer1.provider.getDimension() == -1) {
             for (int xx = -1; xx <= 1; xx++) {
                 for (int zz = -1; zz <= 1; zz++) {
@@ -73,7 +66,6 @@ public class TeleporterHandler {
                 }
             }
         }
-
         for (int yy = 1; yy <= 3; yy++) {
             if (worldServer1.getBlockState(pos.add(0, yy, 0)).isFullBlock()) {
                 worldServer1.setBlockToAir(pos.add(0, yy, 0));
@@ -108,20 +100,19 @@ public class TeleporterHandler {
         return dimensionCache;
     }
 
-    public static void updateDimensionPosition(EntityPlayer player, int dimension, BlockPos pos) {
+    public static void updateDimPos(EntityPlayer player, int dimension, BlockPos pos) {
         NBTTagCompound dimensionCache = getModNBTData(player);
         NBTTagCompound dimPos = (NBTTagCompound) dimensionCache.getTag("" + dimension);
         if (dimPos == null) {
             dimPos = new NBTTagCompound();
             dimensionCache.setTag("" + dimension, dimPos);
         }
-
         dimPos.setInteger("x", pos.getX());
         dimPos.setInteger("y", pos.getY());
         dimPos.setInteger("z", pos.getZ());
     }
 
-    public static BlockPos getDimensionPosition(EntityPlayerMP player, int dimension, BlockPos currentPos) {
+    public static BlockPos getDimPos(EntityPlayerMP player, int dimension, BlockPos currentPos) {
         NBTTagCompound dimensionCache = getModNBTData(player);
         NBTTagCompound dimPos = (NBTTagCompound) dimensionCache.getTag("" + dimension);
         BlockPos position;
@@ -131,15 +122,14 @@ public class TeleporterHandler {
 
             WorldServer newDimworld = player.server.getPlayerList().getServerInstance().getWorld(dimension);
 
-            position = getValidYSpawnPosition(newDimworld, currentPos);
+            position = getValidYSpawnPos(newDimworld, currentPos);
         } else {
             position = new BlockPos(dimPos.getInteger("x"), dimPos.getInteger("y"), dimPos.getInteger("z"));
         }
-
         return position;
     }
 
-    public static BlockPos getValidYSpawnPosition(World world, BlockPos basePos) {
+    public static BlockPos getValidYSpawnPos(World world, BlockPos basePos) {
         MutableBlockPos pos = new MutableBlockPos(basePos.getX() / 8, basePos.getY(), basePos.getZ() / 8);
         boolean foundSpawnPos = false;
         while (!foundSpawnPos && pos.getY() < world.getActualHeight()) {
@@ -160,7 +150,6 @@ public class TeleporterHandler {
                 pos.move(EnumFacing.DOWN);
             }
         }
-
         if (!foundSpawnPos) {
             pos.setPos(basePos);
             for (int x = -1; x < 2; x++) {

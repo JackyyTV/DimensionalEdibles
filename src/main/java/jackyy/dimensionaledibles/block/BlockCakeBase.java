@@ -31,7 +31,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -53,22 +52,22 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         setCreativeTab(DimensionalEdibles.TAB);
     }
 
+    @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return CAKE_AABB[state.getValue(BITES)];
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
+    @Override @SideOnly(Side.CLIENT) @Deprecated
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
         return state.getCollisionBoundingBox(worldIn, pos);
     }
 
-    @Override
+    @Override @Deprecated
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    @Override
+    @Override @Deprecated
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
@@ -94,7 +93,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
     }
 
-    @Override
+    @Override @Deprecated
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!this.canBlockStay(worldIn, pos)) {
             worldIn.setBlockToAir(pos);
@@ -111,18 +110,16 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
     }
 
     @Override
-    @Nullable
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return null;
     }
 
-    @Override
+    @Override @Deprecated
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BITES, meta);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
+    @Override @SideOnly(Side.CLIENT)
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
     }
@@ -137,12 +134,12 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return new BlockStateContainer(this, BITES);
     }
 
-    @Override
+    @Override @Deprecated
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
         return (7 - blockState.getValue(BITES)) * 2;
     }
 
-    @Override
+    @Override @Deprecated
     public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }
@@ -161,4 +158,5 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         }
         return currenttip;
     }
+
 }

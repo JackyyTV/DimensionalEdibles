@@ -41,8 +41,8 @@ public class ItemCustomApple extends ItemFood {
         if (world.provider.getDimension() != dimension) {
             if (!world.isRemote) {
                 EntityPlayerMP playerMP = (EntityPlayerMP) player;
-                BlockPos coords = TeleporterHandler.getDimensionPosition(playerMP, dimension, player.getPosition());
-                TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+                BlockPos coords = TeleporterHandler.getDimPos(playerMP, dimension, player.getPosition());
+                TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
                 TeleporterHandler.teleport(playerMP, dimension, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             }
@@ -74,20 +74,21 @@ public class ItemCustomApple extends ItemFood {
                             nbt.setString("cakeName", parts[1].trim());
                             list.add(stack);
                         } else {
-                            DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension id! (Needs to be a number)");
+                            DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension ID! (Needs to be a number)");
                         }
                     } catch (NumberFormatException e) {
-                        DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension id needs to be a number!");
+                        DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
                     }
                 }
             }
         }
     }
 
+    @Override
     public String getItemStackDisplayName(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null || !nbt.hasKey("cakeName")) {
-            return "ERROR Unconfigured!";
+            return "Custom Apple (Unconfigured)";
         }
         return nbt.getString("cakeName") + " Apple";
     }

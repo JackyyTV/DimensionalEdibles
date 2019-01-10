@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
 
 public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvider {
+
     public BlockCustomCake() {
         super();
         setRegistryName(DimensionalEdibles.MODID + ":custom_cake");
@@ -33,11 +34,9 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
-
         if (player.capabilities.isCreativeMode || meta < 0) {
             meta = 0;
         }
-
         int dimension = 0;
         TileEntity ent = world.getTileEntity(pos);
         if (ent != null && ent instanceof TileDimensionCake) {
@@ -52,10 +51,9 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
     }
 
     private void teleportPlayer(World world, EntityPlayer player, int dimension) {
-
         EntityPlayerMP playerMP = (EntityPlayerMP) player;
-        BlockPos coords = TeleporterHandler.getDimensionPosition(playerMP, dimension, player.getPosition());
-        TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+        BlockPos coords = TeleporterHandler.getDimPos(playerMP, dimension, player.getPosition());
+        TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
         TeleporterHandler.teleport(playerMP, dimension, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
     }
 
@@ -88,10 +86,10 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
                         nbt.setString("cakeName", parts[1].trim());
                         list.add(stack);
                     } else {
-                        DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension id! (Needs to be a number)");
+                        DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension ID! (Needs to be a number)");
                     }
                 } catch (NumberFormatException e) {
-                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension id needs to be a number!");
+                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
                 }
             }
         }
@@ -101,4 +99,5 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileDimensionCake();
     }
+
 }

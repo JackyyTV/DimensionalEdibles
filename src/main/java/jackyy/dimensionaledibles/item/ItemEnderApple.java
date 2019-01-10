@@ -36,9 +36,9 @@ public class ItemEnderApple extends ItemFood {
                 if (ModConfig.tweaks.enderApple.useCustomCoords) {
                     coords = new BlockPos(ModConfig.tweaks.enderApple.customCoords.x, ModConfig.tweaks.enderApple.customCoords.y, ModConfig.tweaks.enderApple.customCoords.z);
                 } else {
-                    coords = TeleporterHandler.getDimensionPosition(playerMP, 1, player.getPosition());
+                    coords = TeleporterHandler.getDimPos(playerMP, 1, player.getPosition());
                 }
-                TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+                TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
                 TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             }

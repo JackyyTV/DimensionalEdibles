@@ -1,4 +1,4 @@
-package jackyy.dimensionaledibles.renderer;
+package jackyy.dimensionaledibles.client;
 
 import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
 import net.minecraft.client.Minecraft;
@@ -11,10 +11,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
 public class TileCustomCakeRenderer extends TileEntitySpecialRenderer<TileDimensionCake> {
-    public static final TileCustomCakeRenderer INSTANCE = new TileCustomCakeRenderer();
 
-    private TileCustomCakeRenderer() {
-    }
+    public static final TileCustomCakeRenderer INSTANCE = new TileCustomCakeRenderer();
 
     @Override
     public void render(TileDimensionCake cake, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_) {
@@ -52,4 +50,5 @@ public class TileCustomCakeRenderer extends TileEntitySpecialRenderer<TileDimens
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.popMatrix();
     }
+
 }

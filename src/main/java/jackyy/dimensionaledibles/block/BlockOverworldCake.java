@@ -65,9 +65,9 @@ public class BlockOverworldCake extends BlockCakeBase implements ITileEntityProv
         if (ModConfig.tweaks.overworldCake.useCustomCoords) {
             coords = new BlockPos(ModConfig.tweaks.overworldCake.customCoords.x, ModConfig.tweaks.overworldCake.customCoords.y, ModConfig.tweaks.overworldCake.customCoords.z);
         } else {
-            coords = TeleporterHandler.getDimensionPosition(playerMP, 0, player.getPosition());
+            coords = TeleporterHandler.getDimPos(playerMP, 0, player.getPosition());
         }
-        TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+        TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
         TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
     }
 

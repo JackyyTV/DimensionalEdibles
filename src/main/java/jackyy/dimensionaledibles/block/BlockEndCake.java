@@ -65,9 +65,9 @@ public class BlockEndCake extends BlockCakeBase implements ITileEntityProvider {
         if (ModConfig.tweaks.endCake.useCustomCoords) {
             coords = new BlockPos(ModConfig.tweaks.endCake.customCoords.x, ModConfig.tweaks.endCake.customCoords.y, ModConfig.tweaks.endCake.customCoords.z);
         } else {
-            coords = TeleporterHandler.getDimensionPosition(playerMP, 1, player.getPosition());
+            coords = TeleporterHandler.getDimPos(playerMP, 1, player.getPosition());
         }
-        TeleporterHandler.updateDimensionPosition(playerMP, world.provider.getDimension(), player.getPosition());
+        TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
         TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
     }
 
