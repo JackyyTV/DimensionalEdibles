@@ -1,6 +1,6 @@
 package jackyy.dimensionaledibles.proxy;
 
-import jackyy.dimensionaledibles.block.tileentity.TileEntityCustomCake;
+import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
 import jackyy.dimensionaledibles.registry.ModBlocks;
 import jackyy.dimensionaledibles.registry.ModItems;
 import jackyy.dimensionaledibles.renderer.TileCustomCakeRenderer;
@@ -27,7 +27,7 @@ public class ClientProxy extends CommonProxy {
 
     public void init(FMLInitializationEvent event) {
         super.init(event);
-	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCustomCake.class, TileCustomCakeRenderer.INSTANCE);
+        ClientRegistry.bindTileEntitySpecialRenderer(TileDimensionCake.class, TileCustomCakeRenderer.INSTANCE);
     }
 
     public void postInit(FMLPostInitializationEvent event) {
