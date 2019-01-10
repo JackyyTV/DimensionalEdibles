@@ -24,11 +24,8 @@ public class TOPCompat {
 
 
     public static class GetTheOneProbe implements Function<ITheOneProbe, Void> {
-
         public static ITheOneProbe probe;
-
-        @Override
-        @Nullable
+        @Override @Nullable
         public Void apply(ITheOneProbe theOneProbe) {
             probe = theOneProbe;
             probe.registerProvider(new IProbeInfoProvider() {
@@ -36,14 +33,12 @@ public class TOPCompat {
                 public String getID() {
                     return DimensionalEdibles.MODID + "cake";
                 }
-
                 @Override
                 public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
                     if (blockState.getBlock() instanceof ITOPInfoProvider) {
                         ITOPInfoProvider provider = (ITOPInfoProvider) blockState.getBlock();
                         provider.addProbeInfo(mode, probeInfo, player, world, blockState, data);
                     }
-
                 }
             });
             return null;

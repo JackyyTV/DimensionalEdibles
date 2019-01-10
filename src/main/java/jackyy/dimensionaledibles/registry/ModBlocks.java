@@ -25,7 +25,7 @@ public class ModBlocks {
 
     public static void init(RegistryEvent.Register<Block> event) {
         event.getRegistry().registerAll(endCake, netherCake, overworldCake, customCake);
-        GameRegistry.registerTileEntity(TileDimensionCake.class, new ResourceLocation(DimensionalEdibles.MODID, "tileChanceCube"));
+        GameRegistry.registerTileEntity(TileDimensionCake.class, new ResourceLocation(DimensionalEdibles.MODID, "tile_dimension_cake"));
     }
 
     @SideOnly(Side.CLIENT)

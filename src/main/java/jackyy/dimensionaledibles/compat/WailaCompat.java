@@ -22,10 +22,6 @@ import java.util.List;
 public class WailaCompat implements IWailaDataProvider {
 
     public static final WailaCompat INSTANCE = new WailaCompat();
-
-    private WailaCompat() {
-    }
-
     private static boolean registered;
     private static boolean loaded;
 

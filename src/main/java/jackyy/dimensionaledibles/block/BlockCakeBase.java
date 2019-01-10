@@ -52,7 +52,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         setCreativeTab(DimensionalEdibles.TAB);
     }
 
-    @Deprecated
+    @Override @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return CAKE_AABB[state.getValue(BITES)];
     }
@@ -147,7 +147,10 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
         if (world.getBlockState(data.getPos()).getBlock() instanceof BlockCakeBase) {
-            probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER)).item(new ItemStack(Items.CAKE)).text(TextFormatting.GREEN + "Bites: ").progress(6 - blockState.getValue(BITES), 6);
+            probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                    .item(new ItemStack(Items.CAKE))
+                    .text(TextFormatting.GREEN + "Bites: ")
+                    .progress(6 - blockState.getValue(BITES), 6);
         }
     }
 

@@ -34,11 +34,9 @@ public class BlockEndCake extends BlockCakeBase implements ITileEntityProvider {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         int meta = getMetaFromState(world.getBlockState(pos)) - 1;
         ItemStack stack = player.getHeldItem(hand);
-
         if (player.capabilities.isCreativeMode || meta < 0) {
             meta = 0;
         }
-
         if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel))) {
             world.setBlockState(pos, getStateFromMeta(meta), 2);
             if (!player.capabilities.isCreativeMode) {
