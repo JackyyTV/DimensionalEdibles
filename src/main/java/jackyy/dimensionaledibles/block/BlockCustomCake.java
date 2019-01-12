@@ -35,7 +35,10 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        int meta = getMetaFromState(world.getBlockState(pos)) - 1;
+	if (world.isRemote) {
+	    return false;
+	}
+	int meta = getMetaFromState(world.getBlockState(pos)) - 1;
         ItemStack stack = player.getHeldItem(hand);
         if (player.capabilities.isCreativeMode || meta < 0) {
             meta = 0;
@@ -60,7 +63,7 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
                 DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
             }
         }
-        if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(fuel))) {
+        if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(fuel))) {      
             world.setBlockState(pos, getStateFromMeta(meta), 2);
             if (!player.capabilities.isCreativeMode) {
                 stack.shrink(1);
@@ -68,13 +71,11 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
             return true;
         } else {
             if (world.provider.getDimension() != dimension) {
-                if (!world.isRemote) {
                     if (player.capabilities.isCreativeMode) {
                         teleportPlayer(world, player, dimension);
                     } else {
                         consumeCake(world, pos, player, dimension);
                     }
-                }
             }
         }
         return true;
@@ -138,7 +139,7 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta) {
         return new TileDimensionCake();
     }
 
