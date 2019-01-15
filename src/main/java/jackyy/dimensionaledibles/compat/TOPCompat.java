@@ -31,7 +31,7 @@ public class TOPCompat {
             probe.registerProvider(new IProbeInfoProvider() {
                 @Override
                 public String getID() {
-                    return DimensionalEdibles.MODID + "cake";
+                    return DimensionalEdibles.MODID + ":cake";
                 }
                 @Override
                 public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
