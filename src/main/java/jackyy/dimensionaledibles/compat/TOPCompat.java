@@ -24,9 +24,7 @@ public class TOPCompat {
 
 
     public static class GetTheOneProbe implements Function<ITheOneProbe, Void> {
-
         public static ITheOneProbe probe;
-
         @Override @Nullable
         public Void apply(ITheOneProbe theOneProbe) {
             probe = theOneProbe;
@@ -38,10 +36,9 @@ public class TOPCompat {
                 @Override
                 public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
                     if (blockState.getBlock() instanceof ITOPInfoProvider) {
-                        ITOPInfoProvider provider = (ITOPInfoProvider)blockState.getBlock();
+                        ITOPInfoProvider provider = (ITOPInfoProvider) blockState.getBlock();
                         provider.addProbeInfo(mode, probeInfo, player, world, blockState, data);
                     }
-
                 }
             });
             return null;

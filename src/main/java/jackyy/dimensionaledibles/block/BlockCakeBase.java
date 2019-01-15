@@ -31,18 +31,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
 /**
- * This is based on the vanilla cake class,
- * but slightly modified and added Waila / TOP support.
+ * This is based on the vanilla cake class, but slightly modified and added
+ * Waila / TOP support.
  */
 public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfoProvider {
 
     public static final PropertyInteger BITES = PropertyInteger.create("bites", 0, 6);
-    public static final AxisAlignedBB[] CAKE_AABB = new AxisAlignedBB[] {new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.1875D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.3125D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.4375D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.5625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.6875D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.8125D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D)};
+    public static final AxisAlignedBB[] CAKE_AABB = new AxisAlignedBB[]{new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.1875D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.3125D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.4375D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.5625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.6875D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D), new AxisAlignedBB(0.8125D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D)};
 
     public BlockCakeBase() {
         super(Material.CAKE);
@@ -53,28 +52,28 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         setCreativeTab(DimensionalEdibles.TAB);
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override @Deprecated
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return CAKE_AABB[state.getValue(BITES)];
     }
 
-    @Override @SideOnly(Side.CLIENT) @SuppressWarnings("deprecation")
+    @Override @SideOnly(Side.CLIENT) @Deprecated
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
         return state.getCollisionBoundingBox(worldIn, pos);
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override @Deprecated
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override @Deprecated
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (playerIn.canEat(false)) {
             playerIn.addStat(StatList.CAKE_SLICES_EATEN);
             playerIn.getFoodStats().addStats(2, 0.1F);
@@ -82,8 +81,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
 
             if (i < 6) {
                 worldIn.setBlockState(pos, state.withProperty(BITES, i + 1), 3);
-            }
-            else {
+            } else {
                 worldIn.setBlockToAir(pos);
             }
         }
@@ -95,7 +93,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override @Deprecated
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn) {
         if (!this.canBlockStay(worldIn, pos)) {
             worldIn.setBlockToAir(pos);
@@ -111,12 +109,12 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return 0;
     }
 
-    @Override @Nullable
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return null;
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override @Deprecated
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BITES, meta);
     }
@@ -136,12 +134,12 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return new BlockStateContainer(this, BITES);
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override @Deprecated
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
         return (7 - blockState.getValue(BITES)) * 2;
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override @Deprecated
     public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }

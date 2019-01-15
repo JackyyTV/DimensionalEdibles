@@ -6,10 +6,12 @@ import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,9 +39,11 @@ public class ItemNetherApple extends ItemFood {
                 if (ModConfig.tweaks.netherApple.useCustomCoords) {
                     coords = new BlockPos(ModConfig.tweaks.netherApple.customCoords.x, ModConfig.tweaks.netherApple.customCoords.y, ModConfig.tweaks.netherApple.customCoords.z);
                 } else {
-                    coords = new BlockPos(0, world.getSeaLevel() + 1, 0);
+                    coords = TeleporterHandler.getDimPos(playerMP, -1, player.getPosition());
                 }
+                TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
                 TeleporterHandler.teleport(playerMP, -1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
+                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             }
         }
     }
@@ -48,7 +52,7 @@ public class ItemNetherApple extends ItemFood {
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
         if (ModConfig.general.netherApple)
-            list.add(new ItemStack(item));
+            list.add(new ItemStack(this));
     }
 
     @Override
