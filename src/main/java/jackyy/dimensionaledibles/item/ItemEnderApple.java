@@ -33,12 +33,16 @@ public class ItemEnderApple extends ItemFood {
     @Override
     public void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
         if (world.provider.getDimension() != 1) {
-            if (ModConfig.tweaks.enderApple.useCustomCoords) {
+            if (!world.isRemote) {
                 EntityPlayerMP playerMP = (EntityPlayerMP) player;
-                BlockPos coords = new BlockPos(ModConfig.tweaks.enderApple.customCoords.x, ModConfig.tweaks.enderApple.customCoords.y, ModConfig.tweaks.enderApple.customCoords.z);
+                BlockPos coords;
+                if (ModConfig.tweaks.enderApple.useCustomCoords) {
+                    coords = new BlockPos(ModConfig.tweaks.enderApple.customCoords.x, ModConfig.tweaks.enderApple.customCoords.y, ModConfig.tweaks.enderApple.customCoords.z);
+                } else {
+                    coords = TeleporterHandler.getDimPos(playerMP, 1, player.getPosition());
+                }
+                TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
                 TeleporterHandler.teleport(playerMP, 1, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
-            } else {
-                player.changeDimension(1);
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             }
         }
@@ -48,7 +52,7 @@ public class ItemEnderApple extends ItemFood {
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
         if (ModConfig.general.enderApple)
-            list.add(new ItemStack(item));
+            list.add(new ItemStack(this));
     }
 
     @Override

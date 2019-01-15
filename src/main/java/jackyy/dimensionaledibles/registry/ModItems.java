@@ -1,5 +1,6 @@
 package jackyy.dimensionaledibles.registry;
 
+import jackyy.dimensionaledibles.item.ItemCustomApple;
 import jackyy.dimensionaledibles.item.ItemEnderApple;
 import jackyy.dimensionaledibles.item.ItemNetherApple;
 import jackyy.dimensionaledibles.item.ItemOverworldApple;
@@ -14,21 +15,21 @@ public class ModItems {
     public static ItemEnderApple enderApple;
     public static ItemNetherApple netherApple;
     public static ItemOverworldApple overworldApple;
+    public static ItemCustomApple customApple;
 
     public static void init() {
         enderApple = GameRegistry.register(new ItemEnderApple());
         netherApple = GameRegistry.register(new ItemNetherApple());
         overworldApple = GameRegistry.register(new ItemOverworldApple());
+        customApple = GameRegistry.register(new ItemCustomApple());
     }
 
     @SideOnly(Side.CLIENT)
     public static void initModels() {
-        ModelLoader.setCustomModelResourceLocation(enderApple, 0,
-                new ModelResourceLocation(enderApple.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(netherApple, 0,
-                new ModelResourceLocation(netherApple.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(overworldApple, 0,
-                new ModelResourceLocation(overworldApple.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(enderApple, 0, new ModelResourceLocation(enderApple.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(netherApple, 0, new ModelResourceLocation(netherApple.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(overworldApple, 0, new ModelResourceLocation(overworldApple.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(customApple, 0, new ModelResourceLocation(customApple.getRegistryName(), "inventory"));
     }
 
 }
