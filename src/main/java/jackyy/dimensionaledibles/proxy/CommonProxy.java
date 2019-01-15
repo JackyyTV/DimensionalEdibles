@@ -3,6 +3,7 @@ package jackyy.dimensionaledibles.proxy;
 import jackyy.dimensionaledibles.compat.TOPCompat;
 import jackyy.dimensionaledibles.compat.WailaCompat;
 import jackyy.dimensionaledibles.registry.ModBlocks;
+import jackyy.dimensionaledibles.registry.ModEvents;
 import jackyy.dimensionaledibles.registry.ModItems;
 import jackyy.dimensionaledibles.registry.ModRecipes;
 import net.minecraft.block.Block;
@@ -26,6 +27,7 @@ public class CommonProxy {
         if (Loader.isModLoaded("waila")) {
             WailaCompat.register();
         }
+        MinecraftForge.EVENT_BUS.register(new ModEvents());
     }
 
     @SubscribeEvent

@@ -78,7 +78,6 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
             playerIn.addStat(StatList.CAKE_SLICES_EATEN);
             playerIn.getFoodStats().addStats(2, 0.1F);
             int i = state.getValue(BITES);
-
             if (i < 6) {
                 worldIn.setBlockState(pos, state.withProperty(BITES, i + 1), 3);
             } else {

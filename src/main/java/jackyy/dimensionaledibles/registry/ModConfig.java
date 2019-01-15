@@ -140,6 +140,9 @@ public class ModConfig {
             }
         }
 
+        @Config.Comment("Set to true to disable the activation of vanilla End Portal.")
+        public boolean disableVanillaEndPortal = false;
+
     }
 
     @Mod.EventBusSubscriber
