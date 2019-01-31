@@ -18,6 +18,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -46,7 +47,7 @@ public class BlockOverworldCake extends BlockCakeBase implements ITileEntityProv
         } else {
             if (world.provider.getDimension() != 0) {
                 if (!world.isRemote) {
-                    if (player.capabilities.isCreativeMode) {
+                    if (player.capabilities.isCreativeMode || !ModConfig.tweaks.overworldCake.consumeFuel) {
                         teleportPlayer(world, player);
                     } else {
                         consumeCake(world, pos, player);
@@ -64,7 +65,12 @@ public class BlockOverworldCake extends BlockCakeBase implements ITileEntityProv
         if (ModConfig.tweaks.overworldCake.useCustomCoords) {
             coords = new BlockPos(ModConfig.tweaks.overworldCake.customCoords.x, ModConfig.tweaks.overworldCake.customCoords.y, ModConfig.tweaks.overworldCake.customCoords.z);
         } else {
-            coords = TeleporterHandler.getDimPos(playerMP, 0, player.getPosition());
+            WorldServer overworld = playerMP.mcServer.getPlayerList().getServerInstance().worldServerForDimension(0);
+            if (ModConfig.tweaks.overworldCake.useWorldSpawn) {
+                coords = overworld.getTopSolidOrLiquidBlock(overworld.getSpawnPoint());
+            } else {
+                coords = TeleporterHandler.getDimPos(playerMP, 0, player.getPosition());
+            }
         }
         TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
         TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());

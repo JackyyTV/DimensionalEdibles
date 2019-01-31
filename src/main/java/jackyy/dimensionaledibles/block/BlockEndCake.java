@@ -46,7 +46,7 @@ public class BlockEndCake extends BlockCakeBase implements ITileEntityProvider {
         } else {
             if (world.provider.getDimension() != 1) {
                 if (!world.isRemote) {
-                    if (player.capabilities.isCreativeMode) {
+                    if (player.capabilities.isCreativeMode || !ModConfig.tweaks.endCake.consumeFuel) {
                         teleportPlayer(world, player);
                     } else {
                         consumeCake(world, pos, player);

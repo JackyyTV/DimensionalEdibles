@@ -155,16 +155,6 @@ public class TeleporterHandler {
                 pos.move(EnumFacing.DOWN);
             }
         }
-        if (!foundSpawnPos) {
-            pos.setPos(basePos);
-            for (int x = -1; x < 2; x++) {
-                for (int z = -1; z < 2; z++) {
-                    world.setBlockState(pos.add(x, -1, z), Blocks.OBSIDIAN.getDefaultState());
-                    world.setBlockToAir(pos.add(x, 0, z));
-                    world.setBlockToAir(pos.add(x, 1, z));
-                }
-            }
-        }
         return pos;
     }
 

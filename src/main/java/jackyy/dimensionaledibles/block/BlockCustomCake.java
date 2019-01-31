@@ -69,7 +69,7 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
         } else {
             if (world.provider.getDimension() != dimension) {
                 if (!world.isRemote) {
-                    if (player.capabilities.isCreativeMode) {
+                    if (player.capabilities.isCreativeMode || !ModConfig.tweaks.customEdible.customCake.consumeFuel) {
                         teleportPlayer(world, player, dimension);
                     } else {
                         consumeCake(world, pos, player, dimension);

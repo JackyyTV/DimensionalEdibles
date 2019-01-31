@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -39,7 +40,12 @@ public class ItemOverworldApple extends ItemFood {
                 if (ModConfig.tweaks.overworldApple.useCustomCoords) {
                     coords = new BlockPos(ModConfig.tweaks.overworldApple.customCoords.x, ModConfig.tweaks.overworldApple.customCoords.y, ModConfig.tweaks.overworldApple.customCoords.z);
                 } else {
-                    coords = TeleporterHandler.getDimPos(playerMP, 0, player.getPosition());
+                    WorldServer overworld = playerMP.mcServer.getPlayerList().getServerInstance().worldServerForDimension(0);
+                    if (ModConfig.tweaks.overworldApple.useWorldSpawn) {
+                        coords = overworld.getTopSolidOrLiquidBlock(overworld.getSpawnPoint());
+                    } else {
+                        coords = TeleporterHandler.getDimPos(playerMP, 0, player.getPosition());
+                    }
                 }
                 TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
                 TeleporterHandler.teleport(playerMP, 0, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());

@@ -46,7 +46,7 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
         } else {
             if (world.provider.getDimension() != -1) {
                 if (!world.isRemote) {
-                    if (player.capabilities.isCreativeMode) {
+                    if (player.capabilities.isCreativeMode || !ModConfig.tweaks.netherCake.consumeFuel) {
                         teleportPlayer(world, player);
                     } else {
                         consumeCake(world, pos, player);
