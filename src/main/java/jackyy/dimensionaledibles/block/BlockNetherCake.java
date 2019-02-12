@@ -70,7 +70,7 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
     }
 
     private void consumeCake(World world, BlockPos pos, EntityPlayer player) {
-        if (player.canEat(true)) {
+        if (player.canEat(true) && ModConfig.tweaks.netherCake.consumeOnUse) {
             int l = world.getBlockState(pos).getValue(BITES);
             if (l < 6) {
                 player.getFoodStats().addStats(2, 0.1F);

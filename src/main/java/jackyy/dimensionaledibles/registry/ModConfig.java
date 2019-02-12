@@ -42,6 +42,8 @@ public class ModConfig {
             public boolean preFueled = false;
             @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
+            @Config.Comment("Set to false to make the cakes not use any fuel when eaten.")
+            public boolean consumeOnUse = true;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
                 public double x = 0.0D;
@@ -70,6 +72,8 @@ public class ModConfig {
             public boolean preFueled = false;
             @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
+            @Config.Comment("Set to false to make the cakes not use any fuel when eaten.")
+            public boolean consumeOnUse = true;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
                 public double x = 0.0D;
@@ -98,6 +102,8 @@ public class ModConfig {
             public boolean preFueled = false;
             @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
+            @Config.Comment("Set to false to make the cakes not use any fuel when eaten.")
+            public boolean consumeOnUse = true;
             public CustomCoords customCoords = new CustomCoords();
             public static class CustomCoords {
                 public double x = 0.0D;
@@ -131,6 +137,8 @@ public class ModConfig {
             public static class CustomCake {
                 @Config.Comment("Set to true to make all Custom Cakes pre-fueled upon placed.")
                 public boolean preFueled = false;
+                @Config.Comment("Set to false to make the cakes not use any fuel when eaten.")
+                public boolean consumeOnUse = true;
                 @Config.Comment({
                         "Set the fuel used by Custom Cakes.",
                         "Format: <Dimension ID>, <Fuel Registry Name>",
