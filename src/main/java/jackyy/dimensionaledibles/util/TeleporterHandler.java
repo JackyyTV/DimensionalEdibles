@@ -59,12 +59,10 @@ public class TeleporterHandler {
 	if (!player.capabilities.isCreativeMode) {
 	    player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
 	}
-	if (worldServer1.provider.getDimension() == -1) {
-	    for (int xx = -1; xx <= 1; xx++) {
-		for (int zz = -1; zz <= 1; zz++) {
-		    if (!worldServer1.getBlockState(pos.add(xx, 0, zz)).isFullBlock()) {
-			worldServer1.setBlockState(pos.add(xx, 0, zz), Blocks.OBSIDIAN.getDefaultState());
-		    }
+	for (int xx = -1; xx <= 1; xx++) {
+	    for (int zz = -1; zz <= 1; zz++) {
+		if (!worldServer1.getBlockState(pos.add(xx, 0, zz)).isFullBlock()) {
+		    worldServer1.setBlockState(pos.add(xx, 0, zz), Blocks.OBSIDIAN.getDefaultState());
 		}
 	    }
 	}
