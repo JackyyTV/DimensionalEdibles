@@ -1,5 +1,7 @@
 package jackyy.dimensionaledibles.util;
 
+import java.util.Random;
+
 import jackyy.dimensionaledibles.DimensionalEdibles;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.Entity;
@@ -23,8 +25,6 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-
-import java.util.Random;
 
 public class TeleporterHandler {
 

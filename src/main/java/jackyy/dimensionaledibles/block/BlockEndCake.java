@@ -70,13 +70,15 @@ public class BlockEndCake extends BlockCakeBase implements ITileEntityProvider {
     }
 
     private void consumeCake(World world, BlockPos pos, EntityPlayer player) {
-	if (player.canEat(true) && ModConfig.tweaks.endCake.consumeOnUse) {
-	    int l = world.getBlockState(pos).getValue(BITES);
-	    if (l < 6) {
-		player.getFoodStats().addStats(2, 0.1F);
-		world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-		teleportPlayer(world, player);
+	if (player.canEat(true)) {
+	    if (ModConfig.tweaks.endCake.consumeOnUse) {
+		int l = world.getBlockState(pos).getValue(BITES);
+		if (l < 6) {
+		    player.getFoodStats().addStats(2, 0.1F);
+		    world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
+		}
 	    }
+	    teleportPlayer(world, player);
 	}
     }
 

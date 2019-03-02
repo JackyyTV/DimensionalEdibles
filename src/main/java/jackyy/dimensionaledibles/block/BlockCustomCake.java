@@ -88,13 +88,15 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
     }
 
     private void consumeCake(World world, BlockPos pos, EntityPlayer player, int dimension) {
-        if (player.canEat(true) && ModConfig.tweaks.customEdible.customCake.consumeOnUse) {
-            int l = world.getBlockState(pos).getValue(BITES);
-            if (l < 6) {
-                player.getFoodStats().addStats(2, 0.1F);
-                world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                teleportPlayer(world, player, dimension);
+        if (player.canEat(true)) {
+            if(ModConfig.tweaks.customEdible.customCake.consumeOnUse) {
+                int l = world.getBlockState(pos).getValue(BITES);
+                if (l < 6) {
+                    player.getFoodStats().addStats(2, 0.1F);
+                    world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);    
+                }
             }
+            teleportPlayer(world, player, dimension);
         }
     }
 
