@@ -27,6 +27,10 @@ import org.apache.logging.log4j.Level;
 
 public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvider {
 
+    private int customX = 0;
+    private int customY = 0;
+    private int customZ = 0;
+
     public BlockCustomCake() {
         super();
         setRegistryName(DimensionalEdibles.MODID + ":custom_cake");
@@ -57,6 +61,22 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
                 DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
             }
         }
+        for (String s : ModConfig.tweaks.customEdible.customCoords) {
+            try {
+                String[] parts = s.split(",");
+                if (parts.length < 4) {
+                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <x>, <y>, <z>");
+                    continue;
+                }
+                if (Integer.parseInt(parts[0].trim()) == dimension) {
+                    customX = Integer.parseInt(parts[1].trim());
+                    customY = Integer.parseInt(parts[2].trim());
+                    customZ = Integer.parseInt(parts[3].trim());
+                }
+            } catch (NumberFormatException e) {
+                DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
+            }
+        }
         if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(fuel))) {
             if (meta >= 0) {
                 world.setBlockState(pos, state.withProperty(BITES, meta), 2);
@@ -68,7 +88,7 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
         } else {
             if (world.provider.getDimension() != dimension) {
                 if (!world.isRemote) {
-                    if (player.capabilities.isCreativeMode) {
+                    if (player.capabilities.isCreativeMode || !ModConfig.tweaks.customEdible.customCake.consumeFuel) {
                         teleportPlayer(world, player, dimension);
                     } else {
                         consumeCake(world, pos, player, dimension);
@@ -82,21 +102,24 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
 
     private void teleportPlayer(World world, EntityPlayer player, int dimension) {
         EntityPlayerMP playerMP = (EntityPlayerMP) player;
-        BlockPos coords = TeleporterHandler.getDimPos(playerMP, dimension, player.getPosition());
+        BlockPos coords;
+        if (customX != 0 && customY != 0 && customZ != 0) {
+            coords = new BlockPos(customX, customY, customZ);
+        } else {
+            coords = TeleporterHandler.getDimPos(playerMP, dimension, player.getPosition());
+        }
         TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
         TeleporterHandler.teleport(playerMP, dimension, coords.getX(), coords.getY(), coords.getZ(), playerMP.server.getPlayerList());
     }
 
     private void consumeCake(World world, BlockPos pos, EntityPlayer player, int dimension) {
         if (player.canEat(true)) {
-            if(ModConfig.tweaks.customEdible.customCake.consumeOnUse) {
-                int l = world.getBlockState(pos).getValue(BITES);
-                if (l < 6) {
-                    player.getFoodStats().addStats(2, 0.1F);
-                    world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);    
-                }
+            int l = world.getBlockState(pos).getValue(BITES);
+            if (l < 6) {
+                player.getFoodStats().addStats(2, 0.1F);
+                world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
+                teleportPlayer(world, player, dimension);
             }
-            teleportPlayer(world, player, dimension);
         }
     }
 

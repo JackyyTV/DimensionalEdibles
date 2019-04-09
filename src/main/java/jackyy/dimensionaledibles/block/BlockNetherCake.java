@@ -32,7 +32,7 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-	int meta = getMetaFromState(world.getBlockState(pos)) - 1;
+        int meta = getMetaFromState(world.getBlockState(pos)) - 1;
         ItemStack stack = player.getHeldItem(hand);
         if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))) {
             if (meta >= 0) {
@@ -45,7 +45,7 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
         } else {
             if (world.provider.getDimension() != -1) {
                 if (!world.isRemote) {
-                    if (player.capabilities.isCreativeMode) {
+                    if (player.capabilities.isCreativeMode || !ModConfig.tweaks.netherCake.consumeFuel) {
                         teleportPlayer(world, player);
                     } else {
                         consumeCake(world, pos, player);
@@ -71,14 +71,12 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
 
     private void consumeCake(World world, BlockPos pos, EntityPlayer player) {
         if (player.canEat(true)) {
-            if(ModConfig.tweaks.netherCake.consumeOnUse) {
-                int l = world.getBlockState(pos).getValue(BITES);
-                if (l < 6) {
-                    player.getFoodStats().addStats(2, 0.1F);
-                    world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
-                }
+            int l = world.getBlockState(pos).getValue(BITES);
+            if (l < 6) {
+                player.getFoodStats().addStats(2, 0.1F);
+                world.setBlockState(pos, world.getBlockState(pos).withProperty(BITES, l + 1), 3);
+                teleportPlayer(world, player);
             }
-            teleportPlayer(world, player);
         }
     }
 
