@@ -58,7 +58,7 @@ public class TeleporterHandler {
         if (!player.capabilities.isCreativeMode) {
             player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
         }
-        if (worldServer1.provider.getDimension() == -1) {
+        if (worldServer1.provider.getDimension() != 0) {
             for (int xx = -1; xx <= 1; xx++) {
                 for (int zz = -1; zz <= 1; zz++) {
                     if (!worldServer1.getBlockState(pos.add(xx, 0, zz)).isFullBlock()) {
@@ -153,16 +153,6 @@ public class TeleporterHandler {
             }
             if (!foundSpawnPos) {
                 pos.move(EnumFacing.DOWN);
-            }
-        }
-        if (!foundSpawnPos) {
-            pos.setPos(basePos);
-            for (int x = -1; x < 2; x++) {
-                for (int z = -1; z < 2; z++) {
-                    world.setBlockState(pos.add(x, -1, z), Blocks.OBSIDIAN.getDefaultState());
-                    world.setBlockToAir(pos.add(x, 0, z));
-                    world.setBlockToAir(pos.add(x, 1, z));
-                }
             }
         }
         return pos;

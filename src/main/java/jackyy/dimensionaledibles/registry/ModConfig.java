@@ -40,6 +40,8 @@ public class ModConfig {
             public String fuel = "minecraft:ender_eye";
             @Config.Comment("Set to true to make the End Cake pre-fueled upon placed.")
             public boolean preFueled = false;
+            @Config.Comment("Set to true to make the End Cake consume fuel.")
+            public boolean consumeFuel = true;
             @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
@@ -68,6 +70,8 @@ public class ModConfig {
             public String fuel = "minecraft:obsidian";
             @Config.Comment("Set to true to make the Nether Cake pre-fueled upon placed.")
             public boolean preFueled = false;
+            @Config.Comment("Set to true to make the Nether Cake consume fuel.")
+            public boolean consumeFuel = true;
             @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
@@ -96,6 +100,13 @@ public class ModConfig {
             public String fuel = "minecraft:sapling";
             @Config.Comment("Set to true to make the Overworld Cake pre-fueled upon placed.")
             public boolean preFueled = false;
+            @Config.Comment("Set to true to make the Overworld Cake consume fuel.")
+            public boolean consumeFuel = true;
+            @Config.Comment({
+                    "Set to true to make the Overworld Apple teleport players to world spawn.",
+                    "Otherwise, it will use the cached position."
+            })
+            public boolean useWorldSpawn = true;
             @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
@@ -108,6 +119,11 @@ public class ModConfig {
 
         public OverworldApple overworldApple = new OverworldApple();
         public static class OverworldApple {
+            @Config.Comment({
+                    "Set to true to make the Overworld Apple teleport players to world spawn.",
+                    "Otherwise, it will use the cached position)."
+            })
+            public boolean useWorldSpawn = true;
             @Config.Comment("Set to true to use custom coordinates for the teleportation.")
             public boolean useCustomCoords = false;
             public CustomCoords customCoords = new CustomCoords();
@@ -127,10 +143,18 @@ public class ModConfig {
                     "Note: \"Cake\" is automatically appended onto the end of the name for cakes."
             })
             public String[] dimensions = new String[0];
+            @Config.Comment({
+                    "Set a list of custom coordinates used by Custom Cakes / Apples, this is optional.",
+                    "Format: <Dimension ID>, <X>, <Y>, <Z>",
+                    "Example: 0, 420, 123, -420"
+            })
+            public String[] customCoords = new String[0];
             public CustomCake customCake = new CustomCake();
             public static class CustomCake {
                 @Config.Comment("Set to true to make all Custom Cakes pre-fueled upon placed.")
                 public boolean preFueled = false;
+                @Config.Comment("Set to true to make all Custom Cakes consume fuel.")
+                public boolean consumeFuel = true;
                 @Config.Comment({
                         "Set the fuel used by Custom Cakes.",
                         "Format: <Dimension ID>, <Fuel Registry Name>",
