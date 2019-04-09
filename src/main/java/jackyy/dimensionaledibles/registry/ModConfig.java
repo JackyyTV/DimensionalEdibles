@@ -147,11 +147,17 @@ public class ModConfig {
         public static class CustomEdible {
             @Config.Comment({
                     "Set a list of dimensions to add cakes / apples for.",
-                    "Format: <Dimension ID>, <Cake / Apple Name>",
+                    "Format: <Dimension ID>, <Cake / Apple Name>, <OPTIONAL X>, <OPTIONAL Y>, <OPTIONAL Z>",
                     "Example: 0, Overworld",
-                    "Note: \"Cake\" is automatically appended onto the end of the name for cakes."
+                    "Note: \"Cake\" is automatically appended onto the end of the name for cakes.",
             })
             public String[] dimensions = new String[0];
+            @Config.Comment({
+                    "Set a list of custom coordinates used by Custom Cakes / Apples, this is optional.",
+                    "Format: <Dimension ID>, <X>, <Y>, <Z>",
+                    "Example: 0, 420, 123, -420"
+            })
+            public String[] customCoords = new String[0];
             public CustomCake customCake = new CustomCake();
             public static class CustomCake {
                 @Config.Comment("Set to true to make all Custom Cakes pre-fueled upon placed.")

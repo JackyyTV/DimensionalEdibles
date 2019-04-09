@@ -29,6 +29,10 @@ import java.util.List;
 
 public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvider {
 
+    private int customX = 0;
+    private int customY = 0;
+    private int customZ = 0;
+
     public BlockCustomCake() {
         super();
         setRegistryName(DimensionalEdibles.MODID + ":custom_cake");
@@ -53,6 +57,22 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
                 }
                 if (Integer.parseInt(parts[0].trim()) == dimension) {
                     fuel = parts[1].trim();
+                }
+            } catch (NumberFormatException e) {
+                DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
+            }
+        }
+        for (String s : ModConfig.tweaks.customEdible.customCoords) {
+            try {
+                String[] parts = s.split(",");
+                if (parts.length < 4) {
+                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <x>, <y>, <z>");
+                    continue;
+                }
+                if (Integer.parseInt(parts[0].trim()) == dimension) {
+                    customX = Integer.parseInt(parts[1].trim());
+                    customY = Integer.parseInt(parts[2].trim());
+                    customZ = Integer.parseInt(parts[3].trim());
                 }
             } catch (NumberFormatException e) {
                 DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
@@ -83,7 +103,12 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
 
     private void teleportPlayer(World world, EntityPlayer player, int dimension) {
         EntityPlayerMP playerMP = (EntityPlayerMP) player;
-        BlockPos coords = TeleporterHandler.getDimPos(playerMP, dimension, player.getPosition());
+        BlockPos coords;
+        if (customX != 0 && customY != 0 && customZ != 0) {
+            coords = new BlockPos(customX, customY, customZ);
+        } else {
+            coords = TeleporterHandler.getDimPos(playerMP, dimension, player.getPosition());
+        }
         TeleporterHandler.updateDimPos(playerMP, world.provider.getDimension(), player.getPosition());
         TeleporterHandler.teleport(playerMP, dimension, coords.getX(), coords.getY(), coords.getZ(), playerMP.mcServer.getPlayerList());
     }
