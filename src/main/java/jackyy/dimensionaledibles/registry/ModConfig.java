@@ -149,7 +149,7 @@ public class ModConfig {
                     "Set a list of dimensions to add cakes / apples for.",
                     "Format: <Dimension ID>, <Cake / Apple Name>",
                     "Example: 0, Overworld",
-                    "Note: \"Cake\" is automatically appended onto the end of the name for cakes.",
+                    "Note: \"Cake\" is automatically appended onto the end of the name for cakes."
             })
             public String[] dimensions = new String[0];
             @Config.Comment({
