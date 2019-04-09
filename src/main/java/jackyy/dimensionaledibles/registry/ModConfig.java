@@ -147,7 +147,7 @@ public class ModConfig {
         public static class CustomEdible {
             @Config.Comment({
                     "Set a list of dimensions to add cakes / apples for.",
-                    "Format: <Dimension ID>, <Cake / Apple Name>, <OPTIONAL X>, <OPTIONAL Y>, <OPTIONAL Z>",
+                    "Format: <Dimension ID>, <Cake / Apple Name>",
                     "Example: 0, Overworld",
                     "Note: \"Cake\" is automatically appended onto the end of the name for cakes.",
             })
