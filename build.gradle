@@ -34,7 +34,7 @@ repositories {
     }
     maven {
         name = "Hwyla Maven"
-        url  "http://tehnut.info/maven"
+        url  "http://maven.tehnut.info"
     }
     maven {
         name = "TOP Maven"
