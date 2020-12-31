@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = DimensionalEdibles.MODID, name = DimensionalEdibles.MODNAME, version = DimensionalEdibles.VERSION, acceptedMinecraftVersions = DimensionalEdibles.MCVERSION, dependencies = DimensionalEdibles.DEPENDS, guiFactory = DimensionalEdibles.GUIFACTORY, certificateFingerprint = "@FINGERPRINT@", useMetadata = true)
 public class DimensionalEdibles {
 
-    public static final String VERSION = "1.3.1";
+    public static final String VERSION = "1.3.2";
     public static final String MCVERSION = "[1.10,1.11)";
     public static final String MODID = "dimensionaledibles";
     public static final String MODNAME = "Dimensional Edibles";

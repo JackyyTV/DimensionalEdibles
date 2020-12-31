@@ -13,6 +13,9 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -58,6 +61,12 @@ public class ItemCustomApple extends ItemFood {
                 player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 200, false, false));
             }
         }
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+        playerIn.setActiveHand(hand);
+        return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
     }
 
     @Override
