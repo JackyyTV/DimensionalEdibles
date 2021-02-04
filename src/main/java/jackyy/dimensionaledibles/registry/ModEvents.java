@@ -1,6 +1,6 @@
 package jackyy.dimensionaledibles.registry;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
+import jackyy.dimensionaledibles.util.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,7 +18,7 @@ public class ModEvents {
             EntityPlayer player = event.getEntityPlayer();
             if (stack != null && stack.getItem() == Items.ENDER_EYE && event.getWorld().getBlockState(event.getPos()).getBlock() == Blocks.END_PORTAL_FRAME) {
                 event.setCanceled(true);
-                player.addChatComponentMessage(new TextComponentTranslation(DimensionalEdibles.MODID + ".error.end_portal_disabled"));
+                player.addChatComponentMessage(new TextComponentTranslation(Reference.MODID + ".error.end_portal_disabled"));
             }
         }
     }

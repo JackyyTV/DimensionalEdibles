@@ -1,6 +1,6 @@
 package jackyy.dimensionaledibles.registry;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
+import jackyy.dimensionaledibles.util.Reference;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Configuration;
@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Optional;
 
-@Config(modid = DimensionalEdibles.MODID, name = "DimensionalEdibles")
+@Config(modid = Reference.MODID, name = "DimensionalEdibles")
 public class ModConfig {
 
     public static General general = new General();
@@ -200,15 +200,15 @@ public class ModConfig {
                             .filter(entry -> fileName.equals(new File(entry.getKey()).getName())).findFirst();
                     entryOptional.ifPresent(stringConfigurationEntry -> config = stringConfigurationEntry.getValue());
                 } catch (Throwable throwable) {
-                    DimensionalEdibles.logger.error("Failed to get Configuration instance!", throwable);
+                    Reference.LOGGER.error("Failed to get Configuration instance!", throwable);
                 }
             }
             return config;
         }
         @SubscribeEvent
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-            if (event.getModID().equals(DimensionalEdibles.MODID)) {
-                ConfigManager.load(DimensionalEdibles.MODID, Config.Type.INSTANCE);
+            if (event.getModID().equals(Reference.MODID)) {
+                ConfigManager.load(Reference.MODID, Config.Type.INSTANCE);
             }
         }
     }

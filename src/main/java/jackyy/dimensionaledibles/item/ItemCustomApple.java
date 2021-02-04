@@ -1,22 +1,18 @@
 package jackyy.dimensionaledibles.item;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.registry.ModConfig;
+import jackyy.dimensionaledibles.util.Reference;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,14 +22,10 @@ import org.apache.logging.log4j.Level;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class ItemCustomApple extends ItemFood {
+public class ItemCustomApple extends ItemAppleBase {
 
     public ItemCustomApple() {
-        super(4, 0.3F, false);
-        setAlwaysEdible();
-        setRegistryName(DimensionalEdibles.MODID + ":custom_apple");
-        setUnlocalizedName(DimensionalEdibles.MODID + ".custom_apple");
-        setCreativeTab(DimensionalEdibles.TAB);
+        setRegistryName(Reference.MODID + ":custom_apple");
     }
 
     @Override
@@ -64,12 +56,6 @@ public class ItemCustomApple extends ItemFood {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-        playerIn.setActiveHand(hand);
-        return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
-    }
-
-    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, List<ItemStack> list) {
         if (ModConfig.general.customApple) {
@@ -78,7 +64,7 @@ public class ItemCustomApple extends ItemFood {
                 try {
                     String[] parts = s.split(",");
                     if (parts.length < 2) {
-                        DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeName>");
+                        Reference.LOGGER.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeName>");
                         continue;
                     }
                     int dimension = Integer.parseInt(parts[0]);
@@ -98,7 +84,7 @@ public class ItemCustomApple extends ItemFood {
                             try {
                                 String[] coords = c.split(",");
                                 if (coords.length < 4) {
-                                    DimensionalEdibles.logger.log(Level.ERROR, c + " is not a valid input line! Format needs to be: <dimID>, <x>, <y>, <z>");
+                                    Reference.LOGGER.log(Level.ERROR, c + " is not a valid input line! Format needs to be: <dimID>, <x>, <y>, <z>");
                                     continue;
                                 }
                                 if (Integer.parseInt(coords[0].trim()) == dimension) {
@@ -107,32 +93,32 @@ public class ItemCustomApple extends ItemFood {
                                     nbt.setInteger("z", Integer.parseInt(coords[3].trim()));
                                 }
                             } catch (NumberFormatException e) {
-                                DimensionalEdibles.logger.log(Level.ERROR, c + " is not a valid line input! The dimension ID needs to be a number!");
+                                Reference.LOGGER.log(Level.ERROR, c + " is not a valid line input! The dimension ID needs to be a number!");
                             }
                         }
                         list.add(stack);
                     } else {
-                        DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension ID! (Needs to be a number)");
+                        Reference.LOGGER.log(Level.ERROR, parts[0] + " is not a valid dimension ID! (Needs to be a number)");
                     }
                 } catch (NumberFormatException e) {
-                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
+                    Reference.LOGGER.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
                 }
             }
         }
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public String getItemStackDisplayName(ItemStack stack) {
-        NBTTagCompound nbt = stack.getTagCompound();
-        if (nbt == null || !nbt.hasKey("appleName")) {
-            return "Custom Apple";
-        }
-        return nbt.getString("appleName") + " Apple";
+        return I18n.translateToLocalFormatted("item." + Reference.MODID + ".custom_apple.name", getAppleName(stack));
     }
 
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
+    @SuppressWarnings("deprecation")
+    public String getAppleName(ItemStack stack) {
+        NBTTagCompound nbt = stack.getTagCompound();
+        if (nbt == null || !nbt.hasKey("appleName")) {
+            return I18n.translateToLocal(Reference.MODID + ".custom");
+        }
+        return nbt.getString("appleName");
     }
 
 }

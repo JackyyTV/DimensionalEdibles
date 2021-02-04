@@ -1,8 +1,8 @@
 package jackyy.dimensionaledibles.block;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
 import jackyy.dimensionaledibles.registry.ModConfig;
+import jackyy.dimensionaledibles.util.Reference;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -28,8 +28,8 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
 
     public BlockNetherCake() {
         super();
-        setRegistryName(DimensionalEdibles.MODID + ":nether_cake");
-        setUnlocalizedName(DimensionalEdibles.MODID + ".nether_cake");
+        setRegistryName(Reference.MODID + ":nether_cake");
+        setUnlocalizedName(Reference.MODID + ".nether_cake");
     }
 
     @Override

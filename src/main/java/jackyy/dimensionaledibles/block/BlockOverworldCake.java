@@ -1,8 +1,8 @@
 package jackyy.dimensionaledibles.block;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
 import jackyy.dimensionaledibles.registry.ModConfig;
+import jackyy.dimensionaledibles.util.Reference;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -29,8 +29,8 @@ public class BlockOverworldCake extends BlockCakeBase implements ITileEntityProv
 
     public BlockOverworldCake() {
         super();
-        setRegistryName(DimensionalEdibles.MODID + ":overworld_cake");
-        setUnlocalizedName(DimensionalEdibles.MODID + ".overworld_cake");
+        setRegistryName(Reference.MODID + ":overworld_cake");
+        setUnlocalizedName(Reference.MODID + ".overworld_cake");
     }
 
     @Override
