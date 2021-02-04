@@ -29,5 +29,4 @@ public final class Reference {
     public static final String COMMON_PROXY = "jackyy.dimensionaledibles.proxy.CommonProxy";
     public static final String CLIENT_PROXY = "jackyy.dimensionaledibles.proxy.ClientProxy";
 
-
 }

@@ -17,6 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -93,9 +94,9 @@ public class BlockEndCake extends BlockCakeBase implements ITileEntityProvider {
             list.add(new ItemStack(this));
     }
 
-    @Override
+    @Override @SuppressWarnings("deprecation")
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileDimensionCake(1, "End");
+        return new TileDimensionCake(1, I18n.translateToLocal(Reference.MODID + ".end"));
     }
 
 }

@@ -35,7 +35,6 @@ public class ItemBlockCustomCake extends ItemBlock {
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, IBlockState blockState) {
         boolean placed = super.placeBlockAt(stack, player, world, pos, facing, hitX, hitY, hitZ, blockState);
-
         TileEntity te = world.getTileEntity(pos);
         if (te != null) {
             if (te instanceof TileDimensionCake) {
@@ -43,7 +42,6 @@ public class ItemBlockCustomCake extends ItemBlock {
                 ((TileDimensionCake) te).setCakeName(getCakeName(stack));
             }
         }
-
         return placed;
     }
 

@@ -101,7 +101,7 @@ public class BlockOverworldCake extends BlockCakeBase implements ITileEntityProv
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileDimensionCake(0, "Overworld");
+        return new TileDimensionCake();
     }
 
 }
