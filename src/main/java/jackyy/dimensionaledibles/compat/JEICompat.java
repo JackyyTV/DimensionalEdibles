@@ -10,6 +10,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 
 @JEIPlugin
 public class JEICompat implements IModPlugin {
@@ -27,18 +28,21 @@ public class JEICompat implements IModPlugin {
         //End Cake
         registry.addDescription(new ItemStack(ModBlocks.endCake),
                 I18n.format(Reference.MODID + ".end_cake.jeidesc",
-                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel))))));
+                        TextFormatting.DARK_PURPLE + Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel)).getItemStackDisplayName(
+                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel)))) + TextFormatting.RESET
+                ));
         //Nether Cake
         registry.addDescription(new ItemStack(ModBlocks.netherCake),
                 I18n.format(Reference.MODID + ".nether_cake.jeidesc",
-                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))))));
+                        TextFormatting.DARK_PURPLE + Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel)).getItemStackDisplayName(
+                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel)))) + TextFormatting.RESET
+                ));
         //Overworld Cake
         registry.addDescription(new ItemStack(ModBlocks.overworldCake),
                 I18n.format(Reference.MODID + ".overworld_cake.jeidesc",
-                        Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel))))));
+                        TextFormatting.DARK_PURPLE + Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel)).getItemStackDisplayName(
+                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel)))) + TextFormatting.RESET
+                ));
         //Ender Apple
         registry.addDescription(new ItemStack(ModItems.enderApple),
                 Reference.MODID + ".ender_apple.jeidesc");

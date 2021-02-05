@@ -34,7 +34,6 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
     private int customZ = 0;
 
     public BlockCustomCake() {
-        super();
         setRegistryName(Reference.MODID + ":custom_cake");
         setUnlocalizedName(Reference.MODID + ".custom_cake");
     }

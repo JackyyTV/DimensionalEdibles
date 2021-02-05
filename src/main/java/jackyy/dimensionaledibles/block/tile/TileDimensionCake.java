@@ -1,13 +1,11 @@
 package jackyy.dimensionaledibles.block.tile;
 
-import jackyy.dimensionaledibles.util.Reference;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class TileDimensionCake extends TileEntity {
@@ -15,9 +13,8 @@ public class TileDimensionCake extends TileEntity {
     private int dimensionID;
     private String cakeName;
 
-    @SuppressWarnings("deprecation")
     public TileDimensionCake() {
-        this(0, I18n.translateToLocal(Reference.MODID + ".overworld"));
+        this(0, "");
     }
 
     public TileDimensionCake(int dimID, String name) {
