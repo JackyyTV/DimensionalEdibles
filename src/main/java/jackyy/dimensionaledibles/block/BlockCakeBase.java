@@ -1,8 +1,8 @@
 package jackyy.dimensionaledibles.block;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.util.ITOPInfoProvider;
 import jackyy.dimensionaledibles.util.IWailaInfoProvider;
+import jackyy.dimensionaledibles.util.Reference;
 import mcjty.theoneprobe.api.ElementAlignment;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -49,7 +49,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         setTickRandomly(true);
         setHardness(0.5F);
         setSoundType(SoundType.CLOTH);
-        setCreativeTab(DimensionalEdibles.TAB);
+        setCreativeTab(Reference.TAB);
     }
 
     @Override @Deprecated

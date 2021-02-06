@@ -1,8 +1,8 @@
 package jackyy.dimensionaledibles.compat;
 
 import com.google.common.base.Function;
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.util.ITOPInfoProvider;
+import jackyy.dimensionaledibles.util.Reference;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,7 +31,7 @@ public class TOPCompat {
             probe.registerProvider(new IProbeInfoProvider() {
                 @Override
                 public String getID() {
-                    return DimensionalEdibles.MODID + ":cake";
+                    return Reference.MODID + ":cake";
                 }
                 @Override
                 public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {

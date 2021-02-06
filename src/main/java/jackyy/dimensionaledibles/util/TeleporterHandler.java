@@ -1,6 +1,5 @@
 package jackyy.dimensionaledibles.util;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -93,10 +92,10 @@ public class TeleporterHandler {
     }
 
     public static NBTTagCompound getModNBTData(EntityPlayer player) {
-        NBTTagCompound dimensionCache = (NBTTagCompound) player.getEntityData().getTag(DimensionalEdibles.MODID);
+        NBTTagCompound dimensionCache = (NBTTagCompound) player.getEntityData().getTag(Reference.MODID);
         if (dimensionCache == null) {
             dimensionCache = new NBTTagCompound();
-            player.getEntityData().setTag(DimensionalEdibles.MODID, dimensionCache);
+            player.getEntityData().setTag(Reference.MODID, dimensionCache);
         }
         return dimensionCache;
     }
@@ -136,26 +135,63 @@ public class TeleporterHandler {
 
     public static BlockPos getValidYSpawnPos(World world, BlockPos basePos) {
         MutableBlockPos pos = new MutableBlockPos(basePos.getX() / 8, basePos.getY(), basePos.getZ() / 8);
-        boolean foundSpawnPos = false;
-        while (!foundSpawnPos && pos.getY() < world.getActualHeight()) {
-            if (world.getBlockState(pos.add(0, -1, 0)).isSideSolid(world, pos.add(0, -1, 0), EnumFacing.UP) && !world.getBlockState(pos).isNormalCube() && !world.getBlockState(pos.add(0, 1, 0)).isNormalCube()) {
-                foundSpawnPos = true;
+        MutableBlockPos spawnPosition = new MutableBlockPos(-1, -1, -1);
+        int possibleYPosition = 0;
+
+        do {
+            //Scan the x,z coordinate point along the Y column to find a possible spawn location. Returns -1 if no location is found
+            possibleYPosition = scanColumn(world, pos.getX(), pos.getZ(), pos.getY());
+            if(possibleYPosition == -1) {
+                incrementColumn(pos, basePos);
             }
-            if (!foundSpawnPos) {
-                pos.move(EnumFacing.UP);
+            else {
+                spawnPosition.setPos(pos.getX(), possibleYPosition, pos.getZ());
             }
         }
-        while (!foundSpawnPos && pos.getY() > 0) {
-            if (pos.getY() < world.getActualHeight()) {
-                if (world.getBlockState(pos.add(0, -1, 0)).isSideSolid(world, pos.add(0, -1, 0), EnumFacing.UP) && !world.getBlockState(pos).isNormalCube() && !world.getBlockState(pos.add(0, 1, 0)).isNormalCube()) {
-                    foundSpawnPos = true;
+        while(spawnPosition.getY() == -1);
+
+        return spawnPosition;
+    }
+
+    public static int scanColumn(World world, int x, int z, int targetY) {
+        int possibleY = -1;
+        //start searching Y locations at 4 to avoid vanilla bedrock generation
+        for(int currentY = 4; currentY < world.getActualHeight(); currentY++) {
+            BlockPos pos = new BlockPos(x, currentY, z);
+            boolean isBlockBelowSolid = world.getBlockState(pos.down()).isSideSolid(world, pos.down(), EnumFacing.UP);
+            boolean isLegBlockSolid = world.getBlockState(pos).isNormalCube();
+            boolean isChestBlockSolid = world.getBlockState(pos.up()).isNormalCube();
+
+            //Check to see if the block below the player's feet is solid, and if the player has a two block spawning area
+            if(isBlockBelowSolid && !isLegBlockSolid && !isChestBlockSolid) {
+                //The first instance of a possible spawning location found
+                if(possibleY == -1) {
+                    possibleY = currentY;
+                }
+                else {
+                    //If the currentY is closer to the targetY than the current possibleY,
+                    //set that as the new possible spawning location
+                    if(Math.abs(possibleY - targetY) > Math.abs(pos.getY() - targetY)) {
+                        possibleY = currentY;
+                    }
                 }
             }
-            if (!foundSpawnPos) {
-                pos.move(EnumFacing.DOWN);
-            }
+
         }
-        return pos;
+        return possibleY;
+    }
+
+    public static void incrementColumn(MutableBlockPos currentPos, BlockPos originalPos) {
+
+        double tempPosIncrementX = originalPos.getDistance(currentPos.getX() + 1, currentPos.getY(), currentPos.getZ());
+        double tempPosIncrementZ = originalPos.getDistance(currentPos.getX(), currentPos.getY(), currentPos.getZ() + 1);
+
+        if(tempPosIncrementX > tempPosIncrementZ) {
+            currentPos.setPos(currentPos.getX(), currentPos.getY(), currentPos.getZ() + 1);
+        }
+        else {
+            currentPos.setPos(currentPos.getX() + 1, currentPos.getY(), currentPos.getZ());
+        }
     }
 
 }

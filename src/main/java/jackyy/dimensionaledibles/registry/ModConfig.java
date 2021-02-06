@@ -1,13 +1,13 @@
 package jackyy.dimensionaledibles.registry;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
+import jackyy.dimensionaledibles.util.Reference;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = DimensionalEdibles.MODID, name = "DimensionalEdibles", category = DimensionalEdibles.MODID)
+@Config(modid = Reference.MODID, name = "DimensionalEdibles", category = Reference.MODID)
 public class ModConfig {
 
     public static General general = new General();
@@ -20,15 +20,15 @@ public class ModConfig {
         public boolean netherCake = true;
         @Config.Comment("Set to true to enable Overworld Cake.")
         public boolean overworldCake = true;
-        @Config.Comment("Set to true to enable custom Cakes.")
+        @Config.Comment("Set to true to enable Custom Cakes.")
         public boolean customCake = true;
-        @Config.Comment("Set to true to enable Ender Cake.")
+        @Config.Comment("Set to true to enable Ender Apples.")
         public boolean enderApple = true;
-        @Config.Comment("Set to true to enable Nether Cake.")
+        @Config.Comment("Set to true to enable Nether Apples.")
         public boolean netherApple = true;
-        @Config.Comment("Set to true to enable Overworld Cake.")
+        @Config.Comment("Set to true to enable Overworld Apples.")
         public boolean overworldApple = true;
-        @Config.Comment("Set to true to enable Custom Cake.")
+        @Config.Comment("Set to true to enable Custom Apples.")
         public boolean customApple = true;
     }
 
@@ -173,8 +173,8 @@ public class ModConfig {
     public static class ConfigHolder {
         @SubscribeEvent
         public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-            if (event.getModID().equals(DimensionalEdibles.MODID)) {
-                ConfigManager.sync(DimensionalEdibles.MODID, Config.Type.INSTANCE);
+            if (event.getModID().equals(Reference.MODID)) {
+                ConfigManager.sync(Reference.MODID, Config.Type.INSTANCE);
             }
         }
     }

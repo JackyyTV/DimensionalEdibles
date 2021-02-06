@@ -5,7 +5,8 @@ itemGroup.dimensionaledibles=Dimensional Edibles
 item.dimensionaledibles.ender_apple.name=Ender Appel
 item.dimensionaledibles.nether_apple.name=Nether Appel
 item.dimensionaledibles.overworld_apple.name=Overworld Appel
-item.dimensionaledibles.custom_apple.name=Custom Appel
+item.dimensionaledibles.custom_apple.name=%s Appel
+item.dimensionaledibles.custom_cake.name=%s Cake
 
 #Blocks
 tile.dimensionaledibles.end_cake.name=Ender Cake

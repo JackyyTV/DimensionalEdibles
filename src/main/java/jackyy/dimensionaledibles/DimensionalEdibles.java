@@ -1,35 +1,18 @@
 package jackyy.dimensionaledibles;
 
 import jackyy.dimensionaledibles.proxy.CommonProxy;
-import jackyy.dimensionaledibles.registry.ModBlocks;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
+import jackyy.dimensionaledibles.util.Reference;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-@Mod(modid = DimensionalEdibles.MODID, name = DimensionalEdibles.MODNAME, version = DimensionalEdibles.VERSION, acceptedMinecraftVersions = DimensionalEdibles.MCVERSION, dependencies = DimensionalEdibles.DEPENDS, certificateFingerprint = "@FINGERPRINT@", useMetadata = true)
+@Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.MCVERSION, dependencies = Reference.DEPENDS, certificateFingerprint = "@FINGERPRINT@", useMetadata = true)
 public class DimensionalEdibles {
 
-    public static final String VERSION = "1.3.1";
-    public static final String MCVERSION = "[1.11,1.12)";
-    public static final String MODID = "dimensionaledibles";
-    public static final String MODNAME = "Dimensional Edibles";
-    public static final String DEPENDS = "after:waila;after:theoneprobe;";
-    public static final CreativeTabs TAB = new CreativeTabs(MODID) {
-        @Override
-        public ItemStack getTabIconItem() {
-            return new ItemStack(ModBlocks.endCake);
-        }
-    };
-    public static Logger logger = LogManager.getLogger(MODNAME);
-
-    @SidedProxy(serverSide = "jackyy.dimensionaledibles.proxy.CommonProxy", clientSide = "jackyy.dimensionaledibles.proxy.ClientProxy")
+    @SidedProxy(serverSide = Reference.COMMON_PROXY, clientSide = Reference.CLIENT_PROXY)
     public static CommonProxy proxy;
 
     @Mod.EventHandler
@@ -49,7 +32,7 @@ public class DimensionalEdibles {
 
     @Mod.EventHandler
     public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-        logger.warn("Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been modified. This will NOT be supported by the mod author!");
+        Reference.LOGGER.warn("Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been modified. This will NOT be supported by the mod author!");
     }
 
 }

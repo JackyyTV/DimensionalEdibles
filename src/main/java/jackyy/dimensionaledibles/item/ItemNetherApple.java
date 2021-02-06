@@ -1,15 +1,13 @@
 package jackyy.dimensionaledibles.item;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.registry.ModConfig;
+import jackyy.dimensionaledibles.util.Reference;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
@@ -20,14 +18,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class ItemNetherApple extends ItemFood {
+public class ItemNetherApple extends ItemAppleBase {
 
     public ItemNetherApple() {
-        super(4, 0.3F, false);
-        setAlwaysEdible();
-        setRegistryName(DimensionalEdibles.MODID + ":nether_apple");
-        setUnlocalizedName(DimensionalEdibles.MODID + ".nether_apple");
-        setCreativeTab(DimensionalEdibles.TAB);
+        setRegistryName(Reference.MODID + ":nether_apple");
+        setUnlocalizedName(Reference.MODID + ".nether_apple");
     }
 
     @Override
@@ -53,11 +48,6 @@ public class ItemNetherApple extends ItemFood {
     public void getSubItems(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
         if (ModConfig.general.netherApple)
             list.add(new ItemStack(this));
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 
 }

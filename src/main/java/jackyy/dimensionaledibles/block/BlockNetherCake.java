@@ -1,10 +1,8 @@
 package jackyy.dimensionaledibles.block;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
-import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
 import jackyy.dimensionaledibles.registry.ModConfig;
+import jackyy.dimensionaledibles.util.Reference;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -24,12 +21,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvider {
+public class BlockNetherCake extends BlockCakeBase {
 
     public BlockNetherCake() {
-        super();
-        setRegistryName(DimensionalEdibles.MODID + ":nether_cake");
-        setUnlocalizedName(DimensionalEdibles.MODID + ".nether_cake");
+        setRegistryName(Reference.MODID + ":nether_cake");
+        setUnlocalizedName(Reference.MODID + ".nether_cake");
     }
 
     @Override
@@ -92,11 +88,6 @@ public class BlockNetherCake extends BlockCakeBase implements ITileEntityProvide
     public void getSubBlocks(@Nonnull Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
         if (ModConfig.general.netherCake)
             list.add(new ItemStack(this));
-    }
-
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileDimensionCake(-1, "Nether");
     }
 
 }
