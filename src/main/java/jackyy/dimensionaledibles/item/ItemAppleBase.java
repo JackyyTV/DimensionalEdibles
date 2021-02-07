@@ -40,9 +40,9 @@ public class ItemAppleBase extends ItemFood {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-        playerIn.setActiveHand(hand);
-        return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+        player.setActiveHand(hand);
+        return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
     }
 
     @Override

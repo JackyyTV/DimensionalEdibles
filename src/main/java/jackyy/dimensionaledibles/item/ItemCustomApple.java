@@ -12,7 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,6 +24,7 @@ import org.apache.logging.log4j.Level;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class ItemCustomApple extends ItemAppleBase {
 
     public ItemCustomApple() {
@@ -107,18 +110,33 @@ public class ItemCustomApple extends ItemAppleBase {
         }
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override
     public String getItemStackDisplayName(ItemStack stack) {
         return I18n.translateToLocalFormatted("item." + Reference.MODID + ".custom_apple.name", getAppleName(stack));
     }
 
-    @SuppressWarnings("deprecation")
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        int dim = getDimID(stack);
+        String dimName = DimensionType.getById(dim).getName();
+        tooltip.add(TextFormatting.AQUA + I18n.translateToLocal(Reference.MODID + ".dimension") + TextFormatting.WHITE + " " + dimName + " (" + dim + ")");
+    }
+
     public String getAppleName(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null || !nbt.hasKey("appleName")) {
             return I18n.translateToLocal(Reference.MODID + ".custom");
         }
         return nbt.getString("appleName");
+    }
+
+    public int getDimID(ItemStack stack) {
+        NBTTagCompound nbt = stack.getTagCompound();
+        if (nbt == null || !nbt.hasKey("dimID")) {
+            return 0;
+        }
+        return nbt.getInteger("dimID");
     }
 
 }
