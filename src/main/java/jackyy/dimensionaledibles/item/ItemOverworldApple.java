@@ -1,14 +1,12 @@
 package jackyy.dimensionaledibles.item;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.registry.ModConfig;
+import jackyy.dimensionaledibles.util.Reference;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
@@ -18,14 +16,11 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemOverworldApple extends ItemFood {
+public class ItemOverworldApple extends ItemAppleBase {
 
     public ItemOverworldApple() {
-        super(4, 0.3F, false);
-        setAlwaysEdible();
-        setRegistryName(DimensionalEdibles.MODID + ":overworld_apple");
-        setTranslationKey(DimensionalEdibles.MODID + ".overworld_apple");
-        setCreativeTab(DimensionalEdibles.TAB);
+        setRegistryName(Reference.MODID + ":overworld_apple");
+        setTranslationKey(Reference.MODID + ".overworld_apple");
     }
 
     @Override
@@ -57,11 +52,6 @@ public class ItemOverworldApple extends ItemFood {
         if (isInCreativeTab(tab))
             if (ModConfig.general.overworldApple)
                 list.add(new ItemStack(this));
-    }
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack) {
-        return EnumRarity.EPIC;
     }
 
 }

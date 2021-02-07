@@ -1,6 +1,5 @@
 package jackyy.dimensionaledibles.util;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -93,10 +92,10 @@ public class TeleporterHandler {
     }
 
     public static NBTTagCompound getModNBTData(EntityPlayer player) {
-        NBTTagCompound dimensionCache = (NBTTagCompound) player.getEntityData().getTag(DimensionalEdibles.MODID);
+        NBTTagCompound dimensionCache = (NBTTagCompound) player.getEntityData().getTag(Reference.MODID);
         if (dimensionCache == null) {
             dimensionCache = new NBTTagCompound();
-            player.getEntityData().setTag(DimensionalEdibles.MODID, dimensionCache);
+            player.getEntityData().setTag(Reference.MODID, dimensionCache);
         }
         return dimensionCache;
     }

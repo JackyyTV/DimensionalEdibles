@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,19 +24,19 @@ public class ModItems {
         event.getRegistry().registerAll(
                 new ItemBlock(ModBlocks.endCake) {
                     @Override
-                    public EnumRarity getRarity(ItemStack stack) {
+                    public IRarity getForgeRarity(ItemStack stack) {
                         return EnumRarity.EPIC;
                     }
                 }.setRegistryName(ModBlocks.endCake.getRegistryName()),
                 new ItemBlock(ModBlocks.netherCake) {
                     @Override
-                    public EnumRarity getRarity(ItemStack stack) {
+                    public IRarity getForgeRarity(ItemStack stack) {
                         return EnumRarity.EPIC;
                     }
                 }.setRegistryName(ModBlocks.netherCake.getRegistryName()),
                 new ItemBlock(ModBlocks.overworldCake) {
                     @Override
-                    public EnumRarity getRarity(ItemStack stack) {
+                    public IRarity getForgeRarity(ItemStack stack) {
                         return EnumRarity.EPIC;
                     }
                 }.setRegistryName(ModBlocks.overworldCake.getRegistryName()),

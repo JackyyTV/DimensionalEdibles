@@ -2,7 +2,7 @@ package jackyy.dimensionaledibles.compat;
 
 import jackyy.dimensionaledibles.block.BlockCakeBase;
 import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
-import jackyy.dimensionaledibles.util.IWailaInfoProvider;
+import jackyy.gunpowderlib.compat.IWailaInfoProvider;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;

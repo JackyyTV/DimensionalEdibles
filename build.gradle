@@ -30,15 +30,19 @@ minecraft {
 repositories {
     maven {
         name = "JEI Maven"
-        url "http://dvs1.progwml6.com/files/maven"
+        url = "https://dvs1.progwml6.com/files/maven"
     }
     maven {
         name = "Hwyla Maven"
-        url  "http://maven.tehnut.info"
+        url = "https://maven.tehnut.info"
     }
     maven {
         name = "TOP Maven"
-        url = "http://maven.tterrag.com"
+        url = "https://maven.tterrag.com"
+    }
+    maven {
+        name = "Curse Maven"
+        url = "https://www.cursemaven.com"
     }
 }
 
@@ -46,6 +50,7 @@ dependencies {
     deobfCompile "mezz.jei:jei_1.12.2:+"
     deobfCompile "mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
+    deobfCompile "curse.maven:gunpowderlib-356646:3168863" //1.12.2-1.1
 }
 
 processResources {

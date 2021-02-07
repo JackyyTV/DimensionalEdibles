@@ -1,0 +1,23 @@
+#Creative Tab
+itemGroup.dimensionaledibles=Dimensional Edibles
+
+#Items
+item.dimensionaledibles.ender_apple.name=Ender Appel
+item.dimensionaledibles.nether_apple.name=Nether Appel
+item.dimensionaledibles.overworld_apple.name=Overworld Appel
+item.dimensionaledibles.custom_apple.name=%s Appel
+item.dimensionaledibles.custom_cake.name=%s Cake
+
+#Blocks
+tile.dimensionaledibles.end_cake.name=Ender Cake
+tile.dimensionaledibles.nether_cake.name=Nether Cake
+tile.dimensionaledibles.overworld_cake.name=Overworld Cake
+tile.dimensionaledibles.custom_cake.name=Custom Cake
+
+#JEI Compat
+dimensionaledibles.end_cake.jeidesc=Plaats de cake en vul hem met %d, klik met de rechtermuisknop op de cake en je wordt geteleporteerd naar de Ender. De cake heeft oneindig veel toepassingen zolang deze maar is gevuld.
+dimensionaledibles.nether_cake.jeidesc=Plaats de cake naar beneden en vul deze met %d, klik met de rechtermuisknop op de cake en je wordt geteleporteerd naar de Nether. De cake heeft oneindig veel toepassingen zolang deze maar is gevuld.
+dimensionaledibles.overworld_cake.jeidesc=Plaats de cake en vul deze met %d, klik met de rechtermuisknop op de taart en je wordt geteleporteerd naar de Overworld. De cake heeft oneindig veel toepassingen zolang deze maar is gevuld.
+dimensionaledibles.ender_apple.jeidesc=Eet de appel en je wordt geteleporteerd naar de Ender. Eenmalig gebruik.
+dimensionaledibles.nether_apple.jeidesc=Eet de appel en je wordt geteleporteerd naar de Nether. Eenmalig gebruik.
+dimensionaledibles.overworld_apple.jeidesc=Eet de appel en je wordt geteleporteerd naar de Overworld. Eenmalig gebruik.

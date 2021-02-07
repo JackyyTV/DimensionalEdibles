@@ -1,23 +1,23 @@
 package jackyy.dimensionaledibles.block;
 
-import jackyy.dimensionaledibles.DimensionalEdibles;
 import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
 import jackyy.dimensionaledibles.registry.ModConfig;
+import jackyy.dimensionaledibles.util.Reference;
 import jackyy.dimensionaledibles.util.TeleporterHandler;
+import jackyy.gunpowderlib.helper.NBTHelper;
+import jackyy.gunpowderlib.helper.ObjectHelper;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -32,9 +32,8 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
     private int customZ = 0;
 
     public BlockCustomCake() {
-        super();
-        setRegistryName(DimensionalEdibles.MODID + ":custom_cake");
-        setTranslationKey(DimensionalEdibles.MODID + ".custom_cake");
+        setRegistryName(Reference.MODID + ":custom_cake");
+        setTranslationKey(Reference.MODID + ".custom_cake");
     }
 
     @Override
@@ -51,21 +50,21 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
             try {
                 String[] parts = s.split(",");
                 if (parts.length < 2) {
-                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeFuel>");
+                    Reference.LOGGER.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeFuel>");
                     continue;
                 }
                 if (Integer.parseInt(parts[0].trim()) == dimension) {
                     fuel = parts[1].trim();
                 }
             } catch (NumberFormatException e) {
-                DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
+                Reference.LOGGER.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
             }
         }
         for (String s : ModConfig.tweaks.customEdible.customCoords) {
             try {
                 String[] parts = s.split(",");
                 if (parts.length < 4) {
-                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <x>, <y>, <z>");
+                    Reference.LOGGER.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <x>, <y>, <z>");
                     continue;
                 }
                 if (Integer.parseInt(parts[0].trim()) == dimension) {
@@ -74,10 +73,10 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
                     customZ = Integer.parseInt(parts[3].trim());
                 }
             } catch (NumberFormatException e) {
-                DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
+                Reference.LOGGER.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
             }
         }
-        if (!stack.isEmpty() && stack.getItem() == Item.REGISTRY.getObject(new ResourceLocation(fuel))) {
+        if (!stack.isEmpty() && stack.getItem() == ObjectHelper.getItemByName(fuel)) {
             if (meta >= 0) {
                 world.setBlockState(pos, state.withProperty(BITES, meta), 2);
                 if (!player.capabilities.isCreativeMode) {
@@ -137,25 +136,21 @@ public class BlockCustomCake extends BlockCakeBase implements ITileEntityProvide
                 try {
                     String[] parts = s.split(",");
                     if (parts.length < 2) {
-                        DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeName>");
+                        Reference.LOGGER.log(Level.ERROR, s + " is not a valid input line! Format needs to be: <dimID>, <cakeName>");
                         continue;
                     }
                     int dimension = Integer.parseInt(parts[0].trim());
                     if (DimensionManager.isDimensionRegistered(dimension)) {
                         stack = new ItemStack(this);
-                        NBTTagCompound nbt = stack.getTagCompound();
-                        if (nbt == null) {
-                            nbt = new NBTTagCompound();
-                            stack.setTagCompound(nbt);
-                        }
+                        NBTTagCompound nbt = NBTHelper.getTag(stack);
                         nbt.setInteger("dimID", dimension);
                         nbt.setString("cakeName", parts[1].trim());
                         list.add(stack);
                     } else {
-                        DimensionalEdibles.logger.log(Level.ERROR, parts[0] + " is not a valid dimension ID! (Needs to be a number)");
+                        Reference.LOGGER.log(Level.ERROR, parts[0] + " is not a valid dimension ID! (Needs to be a number)");
                     }
                 } catch (NumberFormatException e) {
-                    DimensionalEdibles.logger.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
+                    Reference.LOGGER.log(Level.ERROR, s + " is not a valid line input! The dimension ID needs to be a number!");
                 }
             }
         }
