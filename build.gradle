@@ -30,11 +30,7 @@ minecraft {
 repositories {
     maven {
         name = "JEI Maven"
-        url "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        name = "TOP Maven"
-        url = "http://maven.tterrag.com"
+        url = "https://dvs1.progwml6.com/files/maven"
     }
     maven {
         name = "Curse Maven"
@@ -45,7 +41,7 @@ repositories {
 dependencies {
     deobfCompile "mezz.jei:jei_1.11.2:+"
     deobfCompile "curse.maven:hwyla-253449:2496989" //1.8.22-B37_1.11
-    deobfCompile "curse.maven:theoneprobe-245211:2420012" //1.1x-1.4.7
+    deobfCompile "curse.maven:theoneprobe-245211:2496984" //1.1x-1.4.19
 }
 
 processResources {

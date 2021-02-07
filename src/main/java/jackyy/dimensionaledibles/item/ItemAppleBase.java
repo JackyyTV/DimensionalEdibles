@@ -14,8 +14,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 public class ItemAppleBase extends ItemFood {
 
     public ItemAppleBase() {
@@ -24,7 +22,7 @@ public class ItemAppleBase extends ItemFood {
         setCreativeTab(Reference.TAB);
     }
 
-    @Nullable @Override
+    @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
@@ -42,7 +40,7 @@ public class ItemAppleBase extends ItemFood {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         player.setActiveHand(hand);
-        return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
     @Override

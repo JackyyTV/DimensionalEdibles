@@ -32,21 +32,21 @@ public class JEICompat implements IModPlugin {
     public void register(IModRegistry registry) {
         //End Cake
         registry.addIngredientInfo(new ItemStack(ModBlocks.endCake), ItemStack.class,
-                I18n.format(Reference.MODID + ".end_cake.jeidesc",
-                        TextFormatting.DARK_PURPLE + Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel)))) + TextFormatting.RESET
+                I18n.format(
+                        Reference.MODID + ".end_cake.jeidesc",
+                        TextFormatting.DARK_PURPLE + new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.endCake.fuel))).getDisplayName() + TextFormatting.RESET
                 ));
         //Nether Cake
         registry.addIngredientInfo(new ItemStack(ModBlocks.netherCake), ItemStack.class,
-                I18n.format(Reference.MODID + ".nether_cake.jeidesc",
-                        TextFormatting.DARK_PURPLE + Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel)))) + TextFormatting.RESET
+                I18n.format(
+                        Reference.MODID + ".nether_cake.jeidesc",
+                        TextFormatting.DARK_PURPLE + new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.netherCake.fuel))).getDisplayName() + TextFormatting.RESET
                 ));
         //Overworld Cake
         registry.addIngredientInfo(new ItemStack(ModBlocks.overworldCake), ItemStack.class,
-                I18n.format(Reference.MODID + ".overworld_cake.jeidesc",
-                        TextFormatting.DARK_PURPLE + Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel)).getItemStackDisplayName(
-                                new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel)))) + TextFormatting.RESET
+                I18n.format(
+                        Reference.MODID + ".overworld_cake.jeidesc",
+                        TextFormatting.DARK_PURPLE + new ItemStack(Item.REGISTRY.getObject(new ResourceLocation(ModConfig.tweaks.overworldCake.fuel))).getDisplayName() + TextFormatting.RESET
                 ));
         //Ender Apple
         registry.addIngredientInfo(new ItemStack(ModItems.enderApple), ItemStack.class,

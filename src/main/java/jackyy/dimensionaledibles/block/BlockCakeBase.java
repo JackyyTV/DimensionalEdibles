@@ -1,5 +1,6 @@
 package jackyy.dimensionaledibles.block;
 
+import jackyy.dimensionaledibles.block.tile.TileDimensionCake;
 import jackyy.dimensionaledibles.util.ITOPInfoProvider;
 import jackyy.dimensionaledibles.util.IWailaInfoProvider;
 import jackyy.dimensionaledibles.util.Reference;
@@ -20,12 +21,15 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,6 +42,7 @@ import java.util.Random;
  * This is based on the vanilla cake class, but slightly modified and added
  * Waila / TOP support.
  */
+@SuppressWarnings("deprecation")
 public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfoProvider {
 
     public static final PropertyInteger BITES = PropertyInteger.create("bites", 0, 6);
@@ -52,22 +57,22 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         setCreativeTab(Reference.TAB);
     }
 
-    @Override @Deprecated
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return CAKE_AABB[state.getValue(BITES)];
     }
 
-    @Override @SideOnly(Side.CLIENT) @Deprecated
+    @Override @SideOnly(Side.CLIENT)
     public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World worldIn, BlockPos pos) {
         return state.getCollisionBoundingBox(worldIn, pos);
     }
 
-    @Override @Deprecated
+    @Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
-    @Override @Deprecated
+    @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
@@ -92,7 +97,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return super.canPlaceBlockAt(worldIn, pos) && this.canBlockStay(worldIn, pos);
     }
 
-    @Override @Deprecated
+    @Override
     public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
         if (!this.canBlockStay(worldIn, pos)) {
             worldIn.setBlockToAir(pos);
@@ -113,7 +118,7 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return null;
     }
 
-    @Override @Deprecated
+    @Override
     public IBlockState getStateFromMeta(int meta) {
         return this.getDefaultState().withProperty(BITES, meta);
     }
@@ -133,30 +138,46 @@ public class BlockCakeBase extends Block implements ITOPInfoProvider, IWailaInfo
         return new BlockStateContainer(this, BITES);
     }
 
-    @Override @Deprecated
+    @Override
     public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
         return (7 - blockState.getValue(BITES)) * 2;
     }
 
-    @Override @Deprecated
+    @Override
     public boolean hasComparatorInputOverride(IBlockState state) {
         return true;
     }
 
     @Override
     public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-        if (world.getBlockState(data.getPos()).getBlock() instanceof BlockCakeBase) {
+        Block block = world.getBlockState(data.getPos()).getBlock();
+        if (block instanceof BlockCakeBase) {
             probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
                     .item(new ItemStack(Items.CAKE))
-                    .text(TextFormatting.GREEN + "Bites: ")
+                    .text(TextFormatting.GREEN + I18n.translateToLocal(Reference.MODID + ".bites") + " ")
                     .progress(6 - blockState.getValue(BITES), 6);
+            TileEntity tile = world.getTileEntity(data.getPos());
+            if (tile instanceof TileDimensionCake) {
+                int dim = ((TileDimensionCake) tile).getDimensionID();
+                String dimName = DimensionType.getById(dim).getName();
+                probeInfo.horizontal(probeInfo.defaultLayoutStyle().alignment(ElementAlignment.ALIGN_CENTER))
+                        .item(new ItemStack(Items.ENDER_PEARL))
+                        .text(TextFormatting.AQUA + I18n.translateToLocal(Reference.MODID + ".dimension") + TextFormatting.WHITE + " " + dimName + " (" + dim + ")");
+            }
         }
     }
 
     @Override
     public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        if (accessor.getBlockState().getBlock() instanceof BlockCakeBase) {
-            currenttip.add(TextFormatting.GRAY + "Bites: " + (6 - accessor.getBlockState().getValue(BITES)) + " / 6");
+        Block block = accessor.getBlockState().getBlock();
+        if (block instanceof BlockCakeBase) {
+            currenttip.add(TextFormatting.GRAY + I18n.translateToLocal(Reference.MODID + ".bites") + " " + (6 - accessor.getBlockState().getValue(BITES)) + " / 6");
+            TileEntity tile = accessor.getWorld().getTileEntity(accessor.getPosition());
+            if (tile instanceof TileDimensionCake) {
+                int dim = ((TileDimensionCake) tile).getDimensionID();
+                String dimName = DimensionType.getById(dim).getName();
+                currenttip.add(TextFormatting.GRAY + I18n.translateToLocal(Reference.MODID + ".dimension") + " " + dimName + " (" + dim + ")");
+            }
         }
         return currenttip;
     }

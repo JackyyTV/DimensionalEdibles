@@ -12,9 +12,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
+import java.util.List;
+
+@SuppressWarnings("deprecation")
 public class ItemBlockCustomCake extends ItemBlock {
 
     public ItemBlockCustomCake() {
@@ -27,7 +32,7 @@ public class ItemBlockCustomCake extends ItemBlock {
         return EnumRarity.EPIC;
     }
 
-    @Override @SuppressWarnings("deprecation")
+    @Override
     public String getItemStackDisplayName(ItemStack stack) {
         return I18n.translateToLocalFormatted("item." + Reference.MODID + ".custom_cake.name", getCakeName(stack));
     }
@@ -45,7 +50,14 @@ public class ItemBlockCustomCake extends ItemBlock {
         return placed;
     }
 
-    @SuppressWarnings("deprecation")
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        int dim = getDimID(stack);
+        String dimName = DimensionType.getById(dim).getName();
+        tooltip.add(TextFormatting.AQUA + I18n.translateToLocal(Reference.MODID + ".dimension") + TextFormatting.WHITE + " " + dimName + " (" + dim + ")");
+    }
+
     public String getCakeName(ItemStack stack) {
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt == null || !nbt.hasKey("cakeName")) {
